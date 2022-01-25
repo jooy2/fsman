@@ -14,5 +14,8 @@
     "url": "https://github.com/jooy2/fs-man"
   },
   "author": "Jooy2 <jootc.help@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "winattr": "^3.0.0"
+  }
 }

@@ -10,8 +10,46 @@ A file system utility that can be used with Node.js fs module.
 [![Followers](https://img.shields.io/github/followers/jooy2?style=social)](https://github.com/jooy2)
 
 ## Installation
+
 ```shell
 $ npm i --save fs-man
+```
+
+## Usage
+
+### Using multiple utilities simultaneously with one object
+
+```javascript
+const fsman = require('fs-man');
+
+function main () {
+console.log(fsman.isHidden('.hiddenFile')); // true
+}
+```
+
+### Using multiple utilities in a single require
+
+```javascript
+const { isHidden } = require('fs-man');
+
+function main () {
+    console.log(fsman.isHidden('.hiddenFile')); // true
+}
+```
+
+## Methods
+
+### `isHidden <Promise>`
+
+Checks whether a file or folder in the specified path is a hidden file.
+Determines system hidden files for Windows and the presence or absence of a `.`(dot) for Linux and macOS or other operating systems.
+- `path <String>`: File or directory path
+- `isWindows <Boolean>`: Whether the target operating system to be checked is Windows
+
+```javascript
+console.log(await fsman.isHidden('text.txt')); // false
+console.log(await fsman.isHidden('.hiddenFile')); // true
+console.log(await fsman.isHidden('.hiddenFile', true)); // false (Files with no hidden attribute applied in Windows)
 ```
 
 # License

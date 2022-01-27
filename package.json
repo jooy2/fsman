@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "description": "A file system utility that can be used with Node.js fs module.",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/global.d.ts",
   "engines": {
     "node": ">=12.0.0"
   },
   "scripts": {
+    "publish": "npm run build && npm run test && npm run publish",
     "build": "tsc",
     "test": "npm run lint && mocha --require ts-node/register --parallel test/*.spec.ts",
     "lint": "eslint .",

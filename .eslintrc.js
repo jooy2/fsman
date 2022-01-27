@@ -21,7 +21,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['test/*.spec.js'],
+      files: ['test/*.spec.ts'],
       rules: {
         'no-undef': 0,
       },
@@ -29,11 +29,11 @@ module.exports = {
   ],
   settings: {
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx', '.js'],
+      '@typescript-eslint/parser': ['.ts', '.js'],
     },
     'import/resolver': {
       node: {
-        paths: ['src'],
+        paths: ['lib'],
         extensions: ['.js', '.ts'],
       },
     },

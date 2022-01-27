@@ -7,8 +7,13 @@ module.exports = {
     node: true,
     es6: true,
   },
+  parser: '@typescript-eslint/parser',
+  plugins: [
+    '@typescript-eslint',
+  ],
   extends: [
     'airbnb/base',
+    'plugin:@typescript-eslint/recommended',
   ],
   rules: {
     'linebreak-style': ['error', 'windows'],
@@ -22,4 +27,15 @@ module.exports = {
       },
     },
   ],
+  settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx', '.js'],
+    },
+    'import/resolver': {
+      node: {
+        paths: ['src'],
+        extensions: ['.js', '.ts'],
+      },
+    },
+  },
 };

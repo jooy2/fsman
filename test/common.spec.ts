@@ -1,7 +1,7 @@
-const assert = require('assert');
-const fsman = require('../src');
+import assert = require('assert');
+import fsman = require('../dist');
 
-describe('Array', () => {
+describe('fs-man', () => {
   it('isHidden', async () => {
     assert.strictEqual(await fsman.isHidden('/home/user/Desktop/hello.txt'), false);
     assert.strictEqual(await fsman.isHidden('~/.bash_profile'), true);

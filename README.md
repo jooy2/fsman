@@ -62,5 +62,5 @@ console.log(await fsman.humanizeSize(1000000)); // '976.56 KB'
 console.log(await fsman.humanizeSize(100000000, 3)); // '95.367 MB'
 ```
 
-# License
+## License
 Copyright © 2022 Jooy2 Released under the MIT license.

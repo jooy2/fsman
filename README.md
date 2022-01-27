@@ -52,5 +52,15 @@ console.log(await fsman.isHidden('.hiddenFile')); // true
 console.log(await fsman.isHidden('.hiddenFile', true)); // false (Files with no hidden attribute applied in Windows)
 ```
 
+### `humanizeSize <String>`
+Returns the given byte argument as a human-friendly string.
+- `bytes <Number>`: Converts it to a human-friendly string via the bytes provided here.
+- `decimals <Number> (Default: 2)`: Specifies the number of decimal places to represent.
+
+```javascript
+console.log(await fsman.humanizeSize(1000000)); // '976.56 KB'
+console.log(await fsman.humanizeSize(100000000, 3)); // '95.367 MB'
+```
+
 # License
 Copyright © 2022 Jooy2 Released under the MIT license.

@@ -1,6 +1,6 @@
 {
   "name": "fs-man",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A file system utility that can be used with Node.js fs module.",
   "main": "dist/index.js",
   "types": "dist/global.d.ts",
@@ -8,7 +8,6 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "publish": "npm run build && npm run test && npm run publish",
     "build": "tsc",
     "test": "npm run lint && mocha --require ts-node/register --parallel test/*.spec.ts",
     "lint": "eslint .",

@@ -31,7 +31,7 @@ function main () {
 
 Checks whether a file or folder in the specified path is a hidden file.
 Determines system hidden files for Windows and the presence or absence of a `.`(dot) for Linux and macOS or other operating systems.
-- `path <String>`: File or directory path
+- `filePath <String>`: File or directory path
 - `isWindows <Boolean>`: Whether the target operating system to be checked is Windows
 
 ```javascript
@@ -41,6 +41,7 @@ console.log(await fsman.isHidden('.hiddenFile', true)); // false (Files with no 
 ```
 
 ### `humanizeSize <String>`
+
 Returns the given byte argument as a human-friendly string.
 - `bytes <Number>`: Converts it to a human-friendly string via the bytes provided here.
 - `decimals <Number> (Default: 2)`: Specifies the number of decimal places to represent.
@@ -48,6 +49,30 @@ Returns the given byte argument as a human-friendly string.
 ```javascript
 console.log(await fsman.humanizeSize(1000000)); // '976.56 KB'
 console.log(await fsman.humanizeSize(100000000, 3)); // '95.367 MB'
+```
+
+### `resolvePath <String>`
+
+Remove invalid or unnecessary characters in the path.
+
+- `filePath <String>`: File or directory path
+- `isWindows <Boolean>`: Whether the target operating system to be checked is Windows
+
+```javascript
+console.log(fsman.resolvePath('C:\\Windows\\System32\\'), true); // 'C:\Windows\System32'
+console.log(fsman.resolvePath('home/user/.bashrc')); // '/home/user/.bashrc'
+```
+
+### `joinPath <String>`
+
+Combines paths for each operating system according to the given parameter values.
+
+- `isWindows <Boolean>`: Whether the target operating system to be checked is Windows
+- `paths <String[]>`: A path value consisting of one or more strings. Omit the path separator and put it in the parameter.
+
+```javascript
+console.log(fsman.joinPath(true, 'C:\\', 'Windows', 'System32')); // 'C:\Windows\System32'
+console.log(fsman.joinPath(false, 'home', '/user', '.bashrc')); // '/home/user/.bashrc'
 ```
 
 ## License

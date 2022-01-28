@@ -15,4 +15,12 @@ describe('fsman', () => {
     assert.strictEqual(fsman.humanizeSize(1000000), '976.56 KB');
     assert.strictEqual(fsman.humanizeSize(100000000, 3), '95.367 MB');
   });
+
+  it('joinPath', () => {
+    assert.strictEqual(fsman.joinPath(true, 'C:\\', 'Windows', 'System32'), 'C:\\Windows\\System32');
+    assert.strictEqual(fsman.joinPath(true, 'Users', 'test'), '\\Users\\test');
+    assert.strictEqual(fsman.joinPath(true, 'C:\\Users\\test'), 'C:\\Users\\test');
+    assert.strictEqual(fsman.joinPath(false, '/home', 'user', 'Desktop'), '/home/user/Desktop');
+    assert.strictEqual(fsman.joinPath(false, 'home', '/user', '.bashrc'), '/home/user/.bashrc');
+  });
 });

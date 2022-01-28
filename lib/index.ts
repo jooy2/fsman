@@ -1,4 +1,4 @@
-import winattr = require('winattr');
+import winattr from 'winattr';
 
 export function isHidden(path: string, isWindows = false) : Promise<boolean> {
   return new Promise<boolean>(resolve => {

@@ -2,16 +2,27 @@
   "name": "fs-man",
   "version": "0.0.2",
   "description": "A file system utility that can be used with Node.js fs module.",
-  "main": "dist/index.js",
+  "type": "module",
   "types": "dist/global.d.ts",
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=14.0.0"
   },
   "scripts": {
     "build": "tsc",
-    "test": "npm run lint && mocha --require ts-node/register --parallel test/*.spec.ts",
+    "test": "npm run lint && mocha --parallel test/*.spec.js",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
+  },
+  "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "typesVersions": {
+    "*": {
+      "index.d.ts": [
+        "dist/index.d.ts"
+      ]
+    }
   },
   "repository": {
     "type": "git",
@@ -23,7 +34,6 @@
     "winattr": "^3.0.0"
   },
   "devDependencies": {
-    "@types/mocha": "^9.1.0",
     "@types/node": "^17.0.12",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",

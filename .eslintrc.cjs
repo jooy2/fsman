@@ -21,8 +21,9 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['test/*.spec.ts'],
+      files: ['test/*.spec.js'],
       rules: {
+        'import/extensions': 0,
         'no-undef': 0,
       },
     },

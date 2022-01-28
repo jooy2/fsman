@@ -16,24 +16,12 @@ $ npm i --save fs-man
 ```
 
 ## Usage
-
-### Using multiple utilities simultaneously with one object
-
 ```javascript
-const fsman = require('fs-man');
-
-function main () {
-console.log(fsman.isHidden('.hiddenFile')); // true
-}
-```
-
-### Using multiple utilities in a single require
-
-```javascript
-const { isHidden } = require('fs-man');
+import fsman from 'fsman';
 
 function main () {
     console.log(fsman.isHidden('.hiddenFile')); // true
+    console.log(fsman.humanizeSize(1000000)); // '976.56 KB'
 }
 ```
 

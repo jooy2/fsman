@@ -1,5 +1,5 @@
 import assert from 'assert';
-import * as fsman from '../dist/index.js';
+import fsman from '../dist/index.js';
 
 describe('fs-man', () => {
   it('isHidden', async () => {

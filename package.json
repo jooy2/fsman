@@ -1,6 +1,6 @@
 {
   "name": "fsman",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A file system utility that can be used with Node.js fs module.",
   "type": "module",
   "types": "dist/global.d.ts",

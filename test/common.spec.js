@@ -1,7 +1,7 @@
 import assert from 'assert';
 import fsman from '../dist/index.js';
 
-describe('fs-man', () => {
+describe('fsman', () => {
   it('isHidden', async () => {
     assert.strictEqual(await fsman.isHidden('/home/user/Desktop/hello.txt'), false);
     assert.strictEqual(await fsman.isHidden('~/.bash_profile'), true);

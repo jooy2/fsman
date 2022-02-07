@@ -23,23 +23,27 @@ export default class fsman {
     return `${parseFloat((bytes / 1024 ** byteCalc).toFixed((decimals < 0 ? 0 : decimals)))} ${['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'][byteCalc]}`;
   }
 
-  static resolvePath(filePath: string, isWindows: boolean) : string {
+  static resolvePath(filePath: string, isWindows?: boolean) : string {
     if (isWindows) {
       let windowsPath = filePath;
-      if (!/[a-zA-Z]:\\/.test(windowsPath)) {
+      if (windowsPath.length > 2 && !/[a-zA-Z]:\\/.test(windowsPath)) {
         windowsPath = `\\${windowsPath}`;
       }
+      if (windowsPath.length > 2 && /\\$/.test(windowsPath)) {
+        windowsPath = windowsPath.replace(/\\$/, '');
+      }
       return windowsPath
-        .replace(/\\{2,}/g, '\\')
-        .replace(/\\$/, '');
+        .replace(/\\{2,}/g, '\\');
     }
-    let unixPath = filePath;
+    let unixPath : string = filePath;
     if (!/^\//.test(unixPath)) {
       unixPath = `/${unixPath}`;
     }
-    return unixPath
-      .replace(/\/{2,}/g, '/')
-      .replace(/\/$/, '');
+    unixPath = unixPath.replace(/\/{2,}/g, '/');
+    if (unixPath.length > 1) {
+      unixPath = unixPath.replace(/\/$/, '');
+    }
+    return unixPath;
   }
 
   static joinPath(isWindows: boolean, ...paths: string[]) : string {

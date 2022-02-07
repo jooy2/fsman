@@ -19,6 +19,17 @@ describe('fsman', () => {
     assert.strictEqual(fsman.humanizeSize(100000000, 3), '95.367 MB');
   });
 
+  it('resolvePath', () => {
+    assert.strictEqual(fsman.resolvePath('home'), '/home');
+    assert.strictEqual(fsman.resolvePath('/home//test/'), '/home/test');
+    assert.strictEqual(fsman.resolvePath('home/test/.conf'), '/home/test/.conf');
+    assert.strictEqual(fsman.resolvePath('/'), '/');
+    assert.strictEqual(fsman.resolvePath('C:\\\\Users\\test\\', true), 'C:\\Users\\test');
+    assert.strictEqual(fsman.resolvePath('C:\\Users\\test\\.config', true), 'C:\\Users\\test\\.config');
+    assert.strictEqual(fsman.resolvePath('\\Users\\test\\.config', true), '\\Users\\test\\.config');
+    assert.strictEqual(fsman.resolvePath('C:', true), 'C:');
+  });
+
   it('joinPath', () => {
     assert.strictEqual(fsman.joinPath(true, 'C:\\', 'Windows', 'System32'), 'C:\\Windows\\System32');
     assert.strictEqual(fsman.joinPath(true, 'Users', 'test'), '\\Users\\test');

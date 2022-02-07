@@ -9,7 +9,8 @@ export default class fsman {
           resolve(!error && data.hidden);
         });
       } else {
-        resolve(/(^|\/)\.[^/.]/.test(filePath));
+        const fileName : string = filePath.split('/')?.pop() || '/';
+        resolve(/(^|\/)\.[^/.]/.test(fileName));
       }
     });
   }

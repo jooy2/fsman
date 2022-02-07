@@ -6,6 +6,9 @@ describe('fsman', () => {
     assert.strictEqual(await fsman.isHidden('/home/user/Desktop/hello.txt'), false);
     assert.strictEqual(await fsman.isHidden('~/.bash_profile'), true);
     assert.strictEqual(await fsman.isHidden('.zshrc'), true);
+    assert.strictEqual(await fsman.isHidden('/home/user/Desktop/.hidden'), true);
+    assert.strictEqual(await fsman.isHidden('/home/user/Desktop/.conf/config'), false);
+    assert.strictEqual(await fsman.isHidden('/home/user/Desktop/.conf/.secret'), true);
     assert.strictEqual(await fsman.isHidden('C:\\ProgramData', true), true);
     assert.strictEqual(await fsman.isHidden('C:\\Users', true), false);
   });

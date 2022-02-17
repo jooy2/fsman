@@ -79,7 +79,7 @@ console.log(fsman.joinPath(false, 'home', '/user', '.bashrc')); // '/home/user/.
 
 ### `isValidFileName <Boolean>`
 
-Determines whether the passed path or filename is using a system-accepted string. Returns false if the name is not available.
+Determines whether the passed path or filename is using a system-accepted string (Also check the valid file length). Returns false if the name is not available.
 
 - `filePath <String>`: File or directory path
 - `unixType <Boolean?>`: Passes true if the file type is unix type.

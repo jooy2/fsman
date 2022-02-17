@@ -68,6 +68,6 @@ export default class fsman {
       fileNameRegex = /(^\s+$)|(^\.+$)|([<>:"/\\|?*]+)/;
     }
 
-    return !fileNameRegex.test(fileName);
+    return !fileNameRegex.test(fileName) && fileName.length <= 255;
   }
 }

@@ -37,4 +37,19 @@ describe('fsman', () => {
     assert.strictEqual(fsman.joinPath(false, '/home', 'user', 'Desktop'), '/home/user/Desktop');
     assert.strictEqual(fsman.joinPath(false, 'home', '/user', '.bashrc'), '/home/user/.bashrc');
   });
+
+  it('isValidFileName', () => {
+    assert.strictEqual(fsman.isValidFileName('System32'), true);
+    assert.strictEqual(fsman.isValidFileName('.example', true), true);
+    assert.strictEqual(fsman.isValidFileName('hello.:txt', true), false);
+    assert.strictEqual(fsman.isValidFileName('C:\\Windows\\System32'), true);
+    assert.strictEqual(fsman.isValidFileName('C:\\Users\\test\\Desktop\\hello.txt'), true);
+    assert.strictEqual(fsman.isValidFileName('C:\\Users\\test\\Desktop\\hello*'), false);
+    assert.strictEqual(fsman.isValidFileName('C:\\Users\\test\\Desktop\\hello!@#$%^&*()_+-:='), false);
+    assert.strictEqual(fsman.isValidFileName('hello!@#$%^&*()_+-:=', true), false);
+    assert.strictEqual(fsman.isValidFileName('/home/test/Desktop/test/.example', true), true);
+    assert.strictEqual(fsman.isValidFileName('/home/test/Desktop/test/text.txt', true), true);
+    assert.strictEqual(fsman.isValidFileName('/home/test/Desktop/test/hi!@#$%^&*()_+-=', true), true);
+    assert.strictEqual(fsman.isValidFileName('/home/test/Desktop/test/*hi', true), true);
+  });
 });

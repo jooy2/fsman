@@ -27,7 +27,7 @@ function main () {
 
 ## Methods
 
-### `isHidden <Promise>`
+### `isHidden <Promise:Boolean>`
 
 Checks whether a file or folder in the specified path is a hidden file.
 Determines system hidden files for Windows and the presence or absence of a `.`(dot) for Linux and macOS or other operating systems.
@@ -73,6 +73,18 @@ Combines paths for each operating system according to the given parameter values
 ```javascript
 console.log(fsman.joinPath(true, 'C:\\', 'Windows', 'System32')); // 'C:\Windows\System32'
 console.log(fsman.joinPath(false, 'home', '/user', '.bashrc')); // '/home/user/.bashrc'
+```
+
+### `isValidFileName <Boolean>`
+
+Determines whether the passed path or filename is using a system-accepted string. Returns false if the name is not available.
+
+- `filePath <String>`: File or directory path
+- `unixType <Boolean?>`: Passes true if the file type is unix type.
+
+```javascript
+console.log(fsman.isValidFileName('C:\\Windows\\System32*')); // false
+console.log(fsman.isValidFileName('/home/user/.bashrc', true)); // true
 ```
 
 ## License

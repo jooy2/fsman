@@ -56,4 +56,18 @@ export default class fsman {
     }
     return this.resolvePath(fullPath, false);
   }
+
+  static isValidFileName(filePath: string, unixType?: boolean) : boolean {
+    let fileNameRegex;
+    const fileName = path.basename(filePath);
+
+    if (unixType) {
+      fileNameRegex = /(^\s+$)|(^\.+$)|([:/]+)/;
+    } else {
+      // Windows
+      fileNameRegex = /(^\s+$)|(^\.+$)|([<>:"/\\|?*]+)/;
+    }
+
+    return !fileNameRegex.test(fileName);
+  }
 }

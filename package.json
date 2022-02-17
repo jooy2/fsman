@@ -28,6 +28,21 @@
     "type": "git",
     "url": "https://github.com/jooy2/fsman"
   },
+  "keywords": [
+    "file",
+    "fs",
+    "file management",
+    "files",
+    "explorer",
+    "directory",
+    "folder",
+    "verify",
+    "path",
+    "windows",
+    "macos",
+    "unix",
+    "linux"
+  ],
   "author": "Jooy2 <jootc.help@gmail.com>",
   "license": "MIT",
   "dependencies": {

@@ -8,7 +8,7 @@ A file system utility that can be used with Node.js fs module.
 ![github repo size](https://img.shields.io/github/repo-size/jooy2/fsman)
 [![Followers](https://img.shields.io/github/followers/jooy2?style=social)](https://github.com/jooy2)
 ![Stars](https://img.shields.io/github/stars/jooy2/fsman?style=social)
-![Commit Count](https://img.shields.io/github/commit-activity/m/jooy2/fsman)
+![Commit Count](https://img.shields.io/github/commit-activity/y/jooy2/fsman)
 ![Line Count](https://img.shields.io/tokei/lines/github/jooy2/fsman)
 
 ## Installation

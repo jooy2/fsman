@@ -1,5 +1,6 @@
 import winattr from 'winattr';
 import path from 'path';
+import fs from 'fs';
 
 export default class fsman {
   static isHidden(filePath: string, isWindows = false) : Promise<boolean> {
@@ -68,5 +69,17 @@ export default class fsman {
     }
 
     return !fileNameRegex.test(fileName) && fileName.length <= 255;
+  }
+
+  static mkdir(filePath: string) : void {
+    try {
+      if (!fs.existsSync(filePath)) {
+        fs.mkdirSync(filePath, { recursive: true });
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      }
+    }
   }
 }

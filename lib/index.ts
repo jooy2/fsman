@@ -3,7 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import crypto from 'crypto';
 
-export default class fsman {
+export default class FsMan {
   static isHidden(filePath: string, isWindows = false) : Promise<boolean> {
     return new Promise<boolean>(resolve => {
       if (isWindows) {

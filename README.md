@@ -108,7 +108,7 @@ Returns the file in the specified path as a value hashed by a specific algorithm
 - `algorithm <'md5'|'sha1'|'sha256'|'sha512'>`: OpenSSL algorithm to be used for file hashing
 
 ```javascript
-console.log(await fsman.hash('/home/user/text.txt', 'sha1')); // '38851813f75627d581c593f3ccfb7061dd013fbd
+console.log(await fsman.hash('/home/user/text.txt', 'sha1')); // '38851813f75627d581c593f3ccfb7061dd013fbd'
 ```
 
 ## License

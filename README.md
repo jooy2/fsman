@@ -89,5 +89,16 @@ console.log(fsman.isValidFileName('C:\\Windows\\System32*')); // false
 console.log(fsman.isValidFileName('/home/user/.bashrc', true)); // true
 ```
 
+### `mkdir <void>`
+
+Creates a directory with the specified path. Ignores the operation if the directory already exists.
+
+- `filePath <String>`: File or directory path
+- `recursive <Boolean?|true>`: Recursively creates all directories in the given path.
+
+```javascript
+console.log(fsman.mkdir('/home/user/a/b/c'));
+```
+
 ## License
 Copyright © 2022 Jooy2 Released under the MIT license.

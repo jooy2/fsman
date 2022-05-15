@@ -21,8 +21,8 @@ $ npm i --save fsman
 ```javascript
 import fsman from 'fsman';
 
-function main () {
-    console.log(fsman.isHidden('.hiddenFile')); // true
+async function main () {
+    console.log(await fsman.isHidden('.hiddenFile')); // true
     console.log(fsman.humanizeSize(1000000)); // '976.56 KB'
 }
 ```
@@ -102,13 +102,13 @@ console.log(fsman.mkdir('/home/user/a/b/c'));
 
 ### `hash (Promise<String>)`
 
-Returns the file in the specified path as a value hashed by a specific algorithm. The default algorithm is `md5`.
+Returns the file in the specified path as a value hashed by a specific algorithm. The default algorithm is `md5`. This method uses a `Promise` to return a valid hash value.
 
 - `filePath <String>`: File or directory path
 - `algorithm <'md5'|'sha1'|'sha256'|'sha512'>`: OpenSSL algorithm to be used for file hashing
 
 ```javascript
-console.log(fsman.mkdir('/home/user/a/b/c'));
+console.log(await fsman.hash('/home/user/text.txt', 'sha1')); // '38851813f75627d581c593f3ccfb7061dd013fbd
 ```
 
 ## License

@@ -1,6 +1,7 @@
 import winattr from 'winattr';
 import path from 'path';
 import fs from 'fs';
+import crypto from 'crypto';
 
 export default class fsman {
   static isHidden(filePath: string, isWindows = false) : Promise<boolean> {
@@ -71,15 +72,34 @@ export default class fsman {
     return !fileNameRegex.test(fileName) && fileName.length <= 255;
   }
 
-  static mkdir(filePath: string) : void {
+  static mkdir(filePath: string, recursive = true) : void {
     try {
       if (!fs.existsSync(filePath)) {
-        fs.mkdirSync(filePath, { recursive: true });
+        fs.mkdirSync(filePath, { recursive });
       }
     } catch (err) {
       if (err instanceof Error) {
         throw new Error(err.message);
       }
     }
+  }
+
+  static hash(filePath: string, algorithm: 'md5'|'sha1'|'sha256'|'sha512' = 'md5') : Promise<string> {
+    return new Promise((resolve, reject) => {
+      const hash = crypto.createHash(algorithm);
+      const stream = fs.createReadStream(filePath);
+
+      stream.on('error', (err: Error) => {
+        reject(err);
+      });
+
+      stream.on('data', (chunk: Buffer|string) => {
+        hash.update(chunk);
+      });
+
+      stream.on('end', () => {
+        resolve(hash.digest('hex'));
+      });
+    });
   }
 }

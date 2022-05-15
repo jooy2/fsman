@@ -29,7 +29,7 @@ function main () {
 
 ## Methods
 
-### `isHidden <Promise:Boolean>`
+### `isHidden (Promise<Boolean>)`
 
 Checks whether a file or folder in the specified path is a hidden file.
 Determines system hidden files for Windows and the presence or absence of a `.`(dot) for Linux and macOS or other operating systems.
@@ -42,7 +42,7 @@ console.log(await fsman.isHidden('.hiddenFile')); // true
 console.log(await fsman.isHidden('.hiddenFile', true)); // false (Files with no hidden attribute applied in Windows)
 ```
 
-### `humanizeSize <String>`
+### `humanizeSize (<String>)`
 
 Returns the given byte argument as a human-friendly string.
 - `bytes <Number>`: Converts it to a human-friendly string via the bytes provided here.
@@ -53,7 +53,7 @@ console.log(await fsman.humanizeSize(1000000)); // '976.56 KB'
 console.log(await fsman.humanizeSize(100000000, 3)); // '95.367 MB'
 ```
 
-### `resolvePath <String>`
+### `resolvePath (<String>)`
 
 Remove invalid or unnecessary characters in the path.
 
@@ -65,7 +65,7 @@ console.log(fsman.resolvePath('C:\\Windows\\System32\\'), true); // 'C:\Windows\
 console.log(fsman.resolvePath('home/user/.bashrc')); // '/home/user/.bashrc'
 ```
 
-### `joinPath <String>`
+### `joinPath (<String>)`
 
 Combines paths for each operating system according to the given parameter values.
 
@@ -77,7 +77,7 @@ console.log(fsman.joinPath(true, 'C:\\', 'Windows', 'System32')); // 'C:\Windows
 console.log(fsman.joinPath(false, 'home', '/user', '.bashrc')); // '/home/user/.bashrc'
 ```
 
-### `isValidFileName <Boolean>`
+### `isValidFileName (<Boolean>)`
 
 Determines whether the passed path or filename is using a system-accepted string (Also check the valid file length). Returns false if the name is not available.
 
@@ -89,12 +89,23 @@ console.log(fsman.isValidFileName('C:\\Windows\\System32*')); // false
 console.log(fsman.isValidFileName('/home/user/.bashrc', true)); // true
 ```
 
-### `mkdir <void>`
+### `mkdir (<Void>)`
 
 Creates a directory with the specified path. Ignores the operation if the directory already exists.
 
 - `filePath <String>`: File or directory path
 - `recursive <Boolean?|true>`: Recursively creates all directories in the given path.
+
+```javascript
+console.log(fsman.mkdir('/home/user/a/b/c'));
+```
+
+### `hash (Promise<String>)`
+
+Returns the file in the specified path as a value hashed by a specific algorithm. The default algorithm is `md5`.
+
+- `filePath <String>`: File or directory path
+- `algorithm <'md5'|'sha1'|'sha256'|'sha512'>`: OpenSSL algorithm to be used for file hashing
 
 ```javascript
 console.log(fsman.mkdir('/home/user/a/b/c'));

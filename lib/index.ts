@@ -17,33 +17,45 @@ export default class FsMan {
   }
 
   static humanizeSize(bytes: number, decimals = 2) : string {
+    const sizeUnits = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
     if (bytes < 1) {
-      return '0 Bytes';
+      return `0 ${sizeUnits[0]}`;
     }
+
     const byteCalc = Math.floor(Math.log(bytes) / Math.log(1024));
-    return `${parseFloat((bytes / 1024 ** byteCalc).toFixed((decimals < 0 ? 0 : decimals)))} ${['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'][byteCalc]}`;
+
+    return `${parseFloat((bytes / 1024 ** byteCalc).toFixed((decimals < 0 ? 0 : decimals)))} ${sizeUnits[byteCalc]}`;
   }
 
   static resolvePath(filePath: string, isWindows?: boolean) : string {
     if (isWindows) {
       let windowsPath = filePath;
+
       if (windowsPath.length > 2 && !/[a-zA-Z]:\\/.test(windowsPath)) {
         windowsPath = `\\${windowsPath}`;
       }
+
       if (windowsPath.length > 2 && /\\$/.test(windowsPath)) {
         windowsPath = windowsPath.replace(/\\$/, '');
       }
+
       return windowsPath
         .replace(/\\{2,}/g, '\\');
     }
+
     let unixPath : string = filePath;
+
     if (!/^\//.test(unixPath)) {
       unixPath = `/${unixPath}`;
     }
+
     unixPath = unixPath.replace(/\/{2,}/g, '/');
+
     if (unixPath.length > 1) {
       unixPath = unixPath.replace(/\/$/, '');
     }
+
     return unixPath;
   }
 
@@ -51,10 +63,13 @@ export default class FsMan {
     if (isWindows) {
       return this.resolvePath(path.join(...paths), true);
     }
+
     let fullPath = '';
+
     for (let i = 0, iLen = paths.length; i < iLen; i += 1) {
       fullPath = `${fullPath}/${paths[i]}`;
     }
+
     return this.resolvePath(fullPath, false);
   }
 
@@ -75,7 +90,9 @@ export default class FsMan {
   static mkdir(filePath: string, recursive = true) : void {
     try {
       if (!fs.existsSync(filePath)) {
-        fs.mkdirSync(filePath, { recursive });
+        fs.mkdirSync(filePath, {
+          recursive,
+        });
       }
     } catch (err) {
       if (err instanceof Error) {

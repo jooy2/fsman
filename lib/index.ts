@@ -101,6 +101,19 @@ export default class FsMan {
     }
   }
 
+  static touch(filePath: string) : void {
+    if (!filePath) {
+      return;
+    }
+
+    const date: Date = new Date();
+
+    try {
+      fs.utimesSync(filePath, date, date);
+    } catch (err) {
+      fs.closeSync(fs.openSync(filePath, 'a'));
+    }
+  }
   static hash(filePath: string, algorithm: 'md5'|'sha1'|'sha256'|'sha512' = 'md5') : Promise<string> {
     return new Promise((resolve, reject) => {
       const hash = crypto.createHash(algorithm);

@@ -100,6 +100,15 @@ Creates a directory with the specified path. Ignores the operation if the direct
 console.log(fsman.mkdir('/home/user/a/b/c'));
 ```
 
+### `touch (<Void>)`
+
+Create a file of empty data. If the same file already exists, it is ignored.
+
+- `filePath <String>`: File or directory path
+
+```javascript
+console.log(fsman.touch('/home/user/test.txt'));
+```
 ### `hash (Promise<String>)`
 
 Returns the file in the specified path as a value hashed by a specific algorithm. The default algorithm is `md5`. This method uses a `Promise` to return a valid hash value.

@@ -114,6 +114,21 @@ export default class FsMan {
       fs.closeSync(fs.openSync(filePath, 'a'));
     }
   }
+
+  static rm(filePath: string) : void {
+    if (!filePath) {
+      return;
+    }
+
+    try {
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
+    } catch (e) {
+      // Do Nothing
+    }
+  }
+
   static hash(filePath: string, algorithm: 'md5'|'sha1'|'sha256'|'sha512' = 'md5') : Promise<string> {
     return new Promise((resolve, reject) => {
       const hash = crypto.createHash(algorithm);

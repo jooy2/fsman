@@ -70,4 +70,9 @@ describe('fsman', () => {
     fsman.touch('./__TEST__TOUCH_FILE.txt');
     done();
   });
+
+  it('rm', (done) => {
+    fsman.rm('./__TEST__TOUCH_FILE.txt');
+    done();
+  });
 });

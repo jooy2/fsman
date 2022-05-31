@@ -75,4 +75,10 @@ describe('fsman', () => {
     fsman.rm('./__TEST__TOUCH_FILE.txt');
     done();
   });
+
+  it('mv', (done) => {
+    fsman.mv('test/MV_TEST.txt', 'test/MV_TEST_1.txt');
+    fsman.mv('test/MV_TEST_1.txt', 'test/MV_TEST.txt');
+    done();
+  });
 });

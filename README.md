@@ -120,6 +120,17 @@ Deletes files in the specified path. If the file does not exist in the path, it 
 console.log(fsman.rm('/home/user/text.txt'));
 ```
 
+### `mv (<Void>)`
+
+Moves a file in the specified file path to another path.
+
+- `filePath <String>`: File or directory path
+- `targetFilePath <String>`: Path of file to move
+
+```javascript
+console.log(fsman.mv('/home/user/text.txt', '/home/user/text2.txt'));
+```
+
 ### `hash (Promise<String>)`
 
 Returns the file in the specified path as a value hashed by a specific algorithm. The default algorithm is `md5`. This method uses a `Promise` to return a valid hash value.

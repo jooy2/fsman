@@ -129,6 +129,14 @@ export default class FsMan {
     }
   }
 
+  static mv(filePath: string, targetFilePath: string) : void {
+    if (!filePath || !targetFilePath) {
+      return;
+    }
+
+    fs.renameSync(filePath, targetFilePath);
+  }
+
   static hash(filePath: string, algorithm: 'md5'|'sha1'|'sha256'|'sha512' = 'md5') : Promise<string> {
     return new Promise((resolve, reject) => {
       const hash = crypto.createHash(algorithm);

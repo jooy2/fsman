@@ -137,6 +137,21 @@ export default class FsMan {
     fs.renameSync(filePath, targetFilePath);
   }
 
+  static empty(directoryPath: string) : void {
+    let fileItems: Array<string> = [];
+    try {
+      fileItems = fs.readdirSync(directoryPath);
+    } catch {
+      // Do nothing
+    }
+
+    const fileItemLength: number = fileItems.length;
+
+    for (let i = 0; i < fileItemLength; i += 1) {
+      FsMan.rm(path.join(directoryPath, fileItems[i]));
+    }
+  }
+
   static hash(filePath: string, algorithm: 'md5'|'sha1'|'sha256'|'sha512' = 'md5') : Promise<string> {
     return new Promise((resolve, reject) => {
       const hash = crypto.createHash(algorithm);

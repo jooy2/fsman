@@ -131,6 +131,16 @@ Moves a file in the specified file path to another path.
 console.log(fsman.mv('/home/user/text.txt', '/home/user/text2.txt'));
 ```
 
+### `empty (<Void>)`
+
+Deletes all files in the specified directory path. However, the directory is preserved.
+
+- `directoryPath <String>`: Directory path
+
+```javascript
+console.log(fsman.empty('/home/user/Downloads'));
+```
+
 ### `hash (Promise<String>)`
 
 Returns the file in the specified path as a value hashed by a specific algorithm. The default algorithm is `md5`. This method uses a `Promise` to return a valid hash value.

@@ -81,4 +81,9 @@ describe('fsman', () => {
     fsman.mv('test/MV_TEST_1.txt', 'test/MV_TEST.txt');
     done();
   });
+
+  it('empty', (done) => {
+    fsman.empty('test/EMPTY');
+    done();
+  });
 });

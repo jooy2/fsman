@@ -122,9 +122,12 @@ export default class FsMan {
 
     try {
       if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
+        fs.rmSync(filePath, {
+          recursive: true,
+          force: true,
+        });
       }
-    } catch (e) {
+    } catch {
       // Do Nothing
     }
   }

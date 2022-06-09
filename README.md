@@ -1,4 +1,4 @@
-# fsman
+# 💾 FsMan
 A file system utility that can be used with Node.js fs module.
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jooy2/fsman/blob/master/LICENSE)
@@ -151,6 +151,9 @@ Returns the file in the specified path as a value hashed by a specific algorithm
 ```javascript
 console.log(await fsman.hash('/home/user/text.txt', 'sha1')); // '38851813f75627d581c593f3ccfb7061dd013fbd'
 ```
+
+## Contribute
+You can report issues on GitHub Issue. You can also request a pull to fix bugs and add frequently used features.
 
 ## License
 Copyright © 2022 Jooy2 Released under the MIT license.

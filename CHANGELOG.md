@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.3.0 (2022-07-24)
+
+- `ext`: Add ext method
+- `stat`: Add stat method
+- Upgrade package dependencies
+
 ## 1.2.0 (2022-06-07)
 
 - `empty`: Add empty method

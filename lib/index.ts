@@ -97,6 +97,44 @@ export default class FsMan {
     return strPath.split('.')?.pop() || '';
   }
 
+  static stat(filePath: string) : FileStat {
+    const dateToUnixTime = (date: Date) => Math.floor(new Date(date).getTime() / 1000);
+
+    try {
+      const fileItem = fs.statSync(filePath);
+
+      return {
+        success: true,
+        isDirectory: fileItem.isDirectory(),
+        ext: FsMan.ext(filePath),
+        size: fileItem.size,
+        sizeHumanized: FsMan.humanizeSize(fileItem.size),
+        name: path.basename(filePath),
+        dirname: path.dirname(filePath),
+        path: path.resolve(filePath),
+        created: dateToUnixTime(fileItem.ctime),
+        modified: dateToUnixTime(fileItem.mtime),
+      };
+    } catch (err) {
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      }
+    }
+
+    return {
+      success: false,
+      isDirectory: false,
+      ext: '',
+      size: 0,
+      sizeHumanized: '0 Bytes',
+      name: 'unknown',
+      dirname: path.dirname(filePath),
+      path: filePath,
+      created: -1,
+      modified: -1,
+    };
+  }
+
   static mkdir(filePath: string, recursive = true) : void {
     try {
       if (!fs.existsSync(filePath)) {

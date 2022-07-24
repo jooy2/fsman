@@ -73,6 +73,12 @@ describe('fsman', () => {
     done();
   });
 
+  it('stat', (done) => {
+    assert(fsman.stat('test/STATIC_FILE.txt'));
+    assert(fsman.stat('test'));
+    done();
+  });
+
   it('touch', (done) => {
     fsman.touch('./__TEST__TOUCH_FILE.txt');
     done();

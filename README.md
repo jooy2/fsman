@@ -111,6 +111,34 @@ console.log(fsman.ext('/home/user/test.txt')); // 'txt'
 console.log(fsman.ext('/home/user/test.txt.sample')); // 'sample'
 ```
 
+### `stat (<FileStat>)`
+
+Returns file or directory information as an easy-to-understand object.
+
+- `filePath <String>`: File or directory path
+
+```javascript
+console.log(fsman.stat('/home/user/test.txt'));
+```
+
+Examples of returned values:
+
+```javascript
+{
+  success: true, // Whether the file stat import was successful
+  isDirectory: false,
+  ext: 'txt',
+  size: 33,
+  sizeHumanized: '33 Bytes',
+  name: 'test.txt',
+  dirname: 'user',
+  path: '/home/user/test.txt',
+  created: 1652581984, // Unix timestamp
+  modified: 1652581984 // Unix timestamp
+}
+```
+
+
 ### `touch (<Void>)`
 
 Create a file of empty data. If the same file already exists, it is ignored.

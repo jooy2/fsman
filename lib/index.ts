@@ -87,6 +87,16 @@ export default class FsMan {
     return !fileNameRegex.test(fileName) && fileName.length <= 255;
   }
 
+  static ext(filePath: string) : string {
+    const strPath: string = path.extname(filePath) || filePath;
+
+    if (strPath.indexOf('.') === -1) {
+      return '';
+    }
+
+    return strPath.split('.')?.pop() || '';
+  }
+
   static mkdir(filePath: string, recursive = true) : void {
     try {
       if (!fs.existsSync(filePath)) {

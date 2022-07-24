@@ -66,6 +66,13 @@ describe('fsman', () => {
     assert.strictEqual(await fsman.hash('test/STATIC_FILE.txt', 'sha512'), 'c0be4b1ff1aba7be9b02d619dd10e0bdfa4149cf0f241320fe237336aea286ff68c3f42fae4d707a1a59dc6a269e730d3bc4b9891347647bb5acb82b5792a503');
   });
 
+  it('ext', (done) => {
+    assert.strictEqual(fsman.ext('test/sample.txt'), 'txt');
+    assert.strictEqual(fsman.ext('test.txt.sample'), 'sample');
+    assert.strictEqual(fsman.ext('test'), '');
+    done();
+  });
+
   it('touch', (done) => {
     fsman.touch('./__TEST__TOUCH_FILE.txt');
     done();

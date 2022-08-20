@@ -135,7 +135,7 @@ console.log(fsman.stat('/home/user/test.txt'));
 
 Examples of returned values:
 
-```javascript
+```json5
 {
   success: true, // Whether the file stat import was successful
   isDirectory: false,
@@ -163,7 +163,7 @@ console.log(fsman.touch('/home/user/test.txt'));
 
 ### `rm (<Void>)`
 
-Deletes files in the specified path. If the file does not exist in the path, it is ignored.
+Delete files in the specified path. If the file does not exist in the path, it is ignored.
 
 - `filePath <String>`: File or directory path
 

@@ -66,7 +66,7 @@ export default class FsMan {
 
   static joinPath(isWindows: boolean, ...paths: string[]) : string {
     if (isWindows) {
-      return this.resolvePath(join(...paths), true);
+      return FsMan.resolvePath(join(...paths), true);
     }
 
     let fullPath = '';
@@ -75,7 +75,7 @@ export default class FsMan {
       fullPath = `${fullPath}/${paths[i]}`;
     }
 
-    return this.resolvePath(fullPath, false);
+    return FsMan.resolvePath(fullPath, false);
   }
 
   static isValidFileName(filePath: string, unixType?: boolean) : boolean {

@@ -1,13 +1,18 @@
-import winattr from 'winattr';
-import path from 'path';
-import fs from 'fs';
-import crypto from 'crypto';
+import { get as getAttr } from 'winattr';
+import {
+  join, resolve as pathResolve, extname, basename, dirname,
+} from 'path';
+import {
+  statSync, mkdirSync, existsSync, createReadStream, renameSync,
+  readdirSync, utimesSync, closeSync, rmSync, openSync,
+} from 'fs';
+import { createHash } from 'crypto';
 
 export default class FsMan {
   static isHidden(filePath: string, isWindows = false) : Promise<boolean> {
     return new Promise<boolean>(resolve => {
       if (isWindows) {
-        winattr.get(filePath, (error: Error, data: Attributes) => {
+        getAttr(filePath, (error: Error, data: Attributes) => {
           resolve(!error && data.hidden);
         });
       } else {
@@ -61,7 +66,7 @@ export default class FsMan {
 
   static joinPath(isWindows: boolean, ...paths: string[]) : string {
     if (isWindows) {
-      return this.resolvePath(path.join(...paths), true);
+      return this.resolvePath(join(...paths), true);
     }
 
     let fullPath = '';
@@ -75,7 +80,7 @@ export default class FsMan {
 
   static isValidFileName(filePath: string, unixType?: boolean) : boolean {
     let fileNameRegex;
-    const fileName = path.basename(filePath);
+    const fileName = basename(filePath);
 
     if (unixType) {
       fileNameRegex = /(^\s+$)|(^\.+$)|([:/]+)/;
@@ -88,7 +93,7 @@ export default class FsMan {
   }
 
   static ext(filePath: string) : string {
-    const strPath: string = path.extname(filePath) || filePath;
+    const strPath: string = extname(filePath) || filePath;
 
     if (strPath.indexOf('.') === -1) {
       return '';
@@ -101,7 +106,7 @@ export default class FsMan {
     const dateToUnixTime = (date: Date) => Math.floor(new Date(date).getTime() / 1000);
 
     try {
-      const fileItem = fs.statSync(filePath);
+      const fileItem = statSync(filePath);
 
       return {
         success: true,
@@ -109,9 +114,9 @@ export default class FsMan {
         ext: FsMan.ext(filePath),
         size: fileItem.size,
         sizeHumanized: FsMan.humanizeSize(fileItem.size),
-        name: path.basename(filePath),
-        dirname: path.dirname(filePath),
-        path: path.resolve(filePath),
+        name: basename(filePath),
+        dirname: dirname(filePath),
+        path: pathResolve(filePath),
         created: dateToUnixTime(fileItem.ctime),
         modified: dateToUnixTime(fileItem.mtime),
       };
@@ -128,7 +133,7 @@ export default class FsMan {
       size: 0,
       sizeHumanized: '0 Bytes',
       name: 'unknown',
-      dirname: path.dirname(filePath),
+      dirname: dirname(filePath),
       path: filePath,
       created: -1,
       modified: -1,
@@ -137,8 +142,8 @@ export default class FsMan {
 
   static mkdir(filePath: string, recursive = true) : void {
     try {
-      if (!fs.existsSync(filePath)) {
-        fs.mkdirSync(filePath, {
+      if (!existsSync(filePath)) {
+        mkdirSync(filePath, {
           recursive,
         });
       }
@@ -157,9 +162,9 @@ export default class FsMan {
     const date: Date = new Date();
 
     try {
-      fs.utimesSync(filePath, date, date);
+      utimesSync(filePath, date, date);
     } catch (err) {
-      fs.closeSync(fs.openSync(filePath, 'a'));
+      closeSync(openSync(filePath, 'a'));
     }
   }
 
@@ -169,8 +174,8 @@ export default class FsMan {
     }
 
     try {
-      if (fs.existsSync(filePath)) {
-        fs.rmSync(filePath, {
+      if (existsSync(filePath)) {
+        rmSync(filePath, {
           recursive: true,
           force: true,
         });
@@ -185,13 +190,13 @@ export default class FsMan {
       return;
     }
 
-    fs.renameSync(filePath, targetFilePath);
+    renameSync(filePath, targetFilePath);
   }
 
   static empty(directoryPath: string) : void {
     let fileItems: Array<string> = [];
     try {
-      fileItems = fs.readdirSync(directoryPath);
+      fileItems = readdirSync(directoryPath);
     } catch {
       // Do nothing
     }
@@ -199,14 +204,14 @@ export default class FsMan {
     const fileItemLength: number = fileItems.length;
 
     for (let i = 0; i < fileItemLength; i += 1) {
-      FsMan.rm(path.join(directoryPath, fileItems[i]));
+      FsMan.rm(join(directoryPath, fileItems[i]));
     }
   }
 
   static hash(filePath: string, algorithm: 'md5'|'sha1'|'sha256'|'sha512' = 'md5') : Promise<string> {
     return new Promise((resolve, reject) => {
-      const hash = crypto.createHash(algorithm);
-      const stream = fs.createReadStream(filePath);
+      const hash = createHash(algorithm);
+      const stream = createReadStream(filePath);
 
       stream.on('error', (err: Error) => {
         reject(err);

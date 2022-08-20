@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.4.0 (2022-08-20)
+
+- Add GitHub workflows
+- `fileName`: Add fileName method
+
 ## 1.3.0 (2022-07-24)
 
 - `ext`: Add ext method

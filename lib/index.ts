@@ -66,7 +66,7 @@ export default class FsMan {
 
   static joinPath(isWindows: boolean, ...paths: string[]) : string {
     if (isWindows) {
-      return FsMan.resolvePath(join(...paths), true);
+      return FsMan.resolvePath(isWindows ? win32.join(...paths) : join(...paths), true);
     }
 
     let fullPath = '';

@@ -44,7 +44,7 @@ describe('fsman', () => {
   it('isValidFileName', (done) => {
     assert.strictEqual(fsman.isValidFileName('System32'), true);
     assert.strictEqual(fsman.isValidFileName('.example', true), true);
-    assert.strictEqual(fsman.isValidFileName('hello.:txt', true), false);
+    assert.strictEqual(fsman.isValidFileName('hello.:txt', true), true);
     assert.strictEqual(fsman.isValidFileName('C:\\Windows\\System32'), true);
     assert.strictEqual(fsman.isValidFileName('C:\\Users\\test\\Desktop\\hello.txt'), true);
     assert.strictEqual(fsman.isValidFileName('C:\\Users\\test\\Desktop\\hello*'), false);
@@ -70,6 +70,16 @@ describe('fsman', () => {
     assert.strictEqual(fsman.ext('test/sample.txt'), 'txt');
     assert.strictEqual(fsman.ext('test.txt.sample'), 'sample');
     assert.strictEqual(fsman.ext('test'), '');
+    done();
+  });
+
+  it('fileName', (done) => {
+    assert.strictEqual(fsman.fileName('test/sample.txt'), 'sample');
+    assert.strictEqual(fsman.fileName('test/sample.txt.sample'), 'sample.txt');
+    assert.strictEqual(fsman.fileName('test/sample.txt', true), 'sample.txt');
+    assert.strictEqual(fsman.fileName('C:\\Users\\user\\Desktop\\hello.txt'), 'hello');
+    assert.strictEqual(fsman.fileName('C:\\Users\\user\\Desktop\\hello.txt', true), 'hello.txt');
+    assert.strictEqual(fsman.fileName('test'), 'test');
     done();
   });
 

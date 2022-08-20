@@ -1,6 +1,6 @@
 import { get as getAttr } from 'winattr';
 import {
-  join, resolve as pathResolve, extname, basename, dirname,
+  join, resolve as pathResolve, extname, basename, dirname, win32,
 } from 'path';
 import {
   statSync, mkdirSync, existsSync, createReadStream, renameSync,
@@ -80,7 +80,7 @@ export default class FsMan {
 
   static isValidFileName(filePath: string, unixType?: boolean) : boolean {
     let fileNameRegex;
-    const fileName = basename(filePath);
+    const fileName = FsMan.fileName(filePath);
 
     if (unixType) {
       fileNameRegex = /(^\s+$)|(^\.+$)|([:/]+)/;
@@ -90,6 +90,26 @@ export default class FsMan {
     }
 
     return !fileNameRegex.test(fileName) && fileName.length <= 255;
+  }
+
+  static fileName(filePath: string, withExtension?: boolean) : string {
+    if (!filePath) {
+      return '';
+    }
+
+    if (filePath.indexOf('/') === -1 && filePath.indexOf('\\') !== -1) {
+      // Windows path
+      if (withExtension) {
+        return win32.basename(filePath);
+      }
+
+      return win32.basename(filePath, extname(filePath));
+    }
+
+    if (withExtension) {
+      return basename(filePath);
+    }
+    return basename(filePath, extname(filePath));
   }
 
   static ext(filePath: string) : string {
@@ -114,7 +134,7 @@ export default class FsMan {
         ext: FsMan.ext(filePath),
         size: fileItem.size,
         sizeHumanized: FsMan.humanizeSize(fileItem.size),
-        name: basename(filePath),
+        name: FsMan.fileName(filePath),
         dirname: dirname(filePath),
         path: pathResolve(filePath),
         created: dateToUnixTime(fileItem.ctime),

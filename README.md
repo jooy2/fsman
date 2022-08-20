@@ -100,6 +100,18 @@ Creates a directory with the specified path. Ignores the operation if the direct
 console.log(fsman.mkdir('/home/user/a/b/c'));
 ```
 
+### `fileName (<String>)`
+
+Returns the file name within the path.
+
+- `filePath <String>`: File or directory path
+- `withExtension <Boolean?|false>`: Returns the name with extension.
+
+```javascript
+console.log(fsman.fileName('/home/user/test.txt')); // 'test'
+console.log(fsman.fileName('/home/user/test.txt', true)); // 'test.txt'
+```
+
 ### `ext (<String>)`
 
 Returns the file extension from the given file path. An empty string value is returned for files without extension.

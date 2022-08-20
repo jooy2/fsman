@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "npm run lint && npm run build && mocha --parallel test/*.spec.js",
+    "test": "npm run build && mocha --parallel test/*.spec.js",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
   },

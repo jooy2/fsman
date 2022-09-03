@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.5.0 (2022-09-03)
+
+- Reduced bundle size due to minify executable code
+
 ## 1.4.0 (2022-08-20)
 
 - Add GitHub workflows

@@ -3,3 +3,8 @@ test/
 .idea/
 .DS_Store
 .git*
+CHANGELOG.md
+terser.config.json
+tsconfig.json
+.eslintignore
+.eslintrc.cjs

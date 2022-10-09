@@ -230,7 +230,12 @@ export default class FsMan {
 
   static hash(filePath: string, algorithm: 'md5'|'sha1'|'sha256'|'sha512' = 'md5') : Promise<string> {
     return new Promise((resolve, reject) => {
-      const hash = createHash(algorithm);
+      if (!filePath) {
+        reject(new Error('Invalid filePath.'));
+        return;
+      }
+
+      const hashHandler = createHash(algorithm);
       const stream = createReadStream(filePath);
 
       stream.on('error', (err: Error) => {
@@ -238,11 +243,11 @@ export default class FsMan {
       });
 
       stream.on('data', (chunk: Buffer|string) => {
-        hash.update(chunk);
+        hashHandler.update(chunk);
       });
 
       stream.on('end', () => {
-        resolve(hash.digest('hex'));
+        resolve(hashHandler.digest('hex'));
       });
     });
   }

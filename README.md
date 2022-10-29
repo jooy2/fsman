@@ -6,11 +6,36 @@ A file system utility that can be used with Node.js fs module.
 
 ## Installation
 
+FsMan requires `Node.js 14.x` or higher, and the repository is serviced through **[NPM](https://npmjs.com)**.
+
+After configuring the node environment, you can simply run the following command.
+
 ```shell
-$ npm i --save fsman
+# via npm
+$ npm install qsu
+
+# via yarn
+$ yarn add qsu
+
+# via pnpm
+$ pnpm install qsu
 ```
 
-## Usage
+## How to use
+
+
+### Using named import (Multiple utilities in a single require) - Recommend
+
+```javascript
+import { isHidden, humanizeSize } from 'fsman';
+
+async function main() {
+	console.log(await isHidden('.hiddenFile')); // true
+	console.log(humanizeSize(1000000)); // '976.56 KB'
+}
+```
+
+### Using whole class (multiple utilities simultaneously with one object)
 
 ```javascript
 import fsman from 'fsman';
@@ -199,7 +224,7 @@ console.log(await fsman.hash('/home/user/text.txt', 'sha1')); // '38851813f75627
 
 ## Contribute
 
-You can report issues on GitHub Issue. You can also request a pull to fix bugs and add frequently used features.
+You can report issues on [GitHub Issue Tracker](https://github.com/jooy2/fsman/issues). You can also request a pull to fix bugs and add frequently used features.
 
 ## License
 

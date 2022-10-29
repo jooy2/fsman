@@ -262,3 +262,22 @@ export default class FsMan {
 		});
 	}
 }
+
+export { FsMan };
+
+export const {
+	isHidden,
+	humanizeSize,
+	resolvePath,
+	joinPath,
+	isValidFileName,
+	fileName,
+	ext,
+	stat,
+	mkdir,
+	touch,
+	rm,
+	mv,
+	empty,
+	hash
+} = FsMan;

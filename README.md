@@ -23,7 +23,6 @@ $ pnpm install qsu
 
 ## How to use
 
-
 ### Using named import (Multiple utilities in a single require) - Recommend
 
 ```javascript

@@ -13,7 +13,7 @@ import {
 	mv,
 	empty,
 	hash
-} from '../dist/index.js';
+} from '../dist';
 
 const IS_WINDOWS_OS = process.platform === 'win32';
 

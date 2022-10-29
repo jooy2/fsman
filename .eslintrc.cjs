@@ -12,11 +12,13 @@ module.exports = {
 	extends: ['airbnb/base', 'plugin:@typescript-eslint/recommended', 'prettier'],
 	rules: {
 		'linebreak-style': 0,
-		'arrow-parens': 0
+		'arrow-parens': 0,
+		'@typescript-eslint/no-explicit-any': 0,
+		'@typescript-eslint/ban-ts-comment': 0
 	},
 	overrides: [
 		{
-			files: ['test/*.spec.js'],
+			files: ['test/*.spec.ts'],
 			rules: {
 				'import/extensions': 0,
 				'no-undef': 0

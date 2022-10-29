@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.6.0 (2022-10-29)
+
+- Support named import
+- Upgrade package dependencies
+- Change test script to TypeScript
+- Add prettier and reformat all codes
+
 ## 1.5.1 (2022-10-08)
 
 - Upgrade package dependencies

@@ -1,10 +1,25 @@
+# System files
+.DS_Store
+Thumbs.db
+*.log
+
+# IDEs
+.idea/
+.vscode/
+
+# Project files
+.github/
 lib/
 test/
-.idea/
-.DS_Store
-.git*
 CHANGELOG.md
-terser.config.json
-tsconfig.json
+
+# For development
+.git/
+.terserrc
 .eslintignore
 .eslintrc.cjs
+.prettierignore
+.prettierrc
+.mocharc.json
+.editorconfig
+tsconfig.json

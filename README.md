@@ -1,15 +1,8 @@
 # 💾 FsMan
+
 A file system utility that can be used with Node.js fs module.
 
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jooy2/fsman/blob/master/LICENSE)
-![Programming Language Usage](https://img.shields.io/github/languages/top/jooy2/fsman)
-[![npm latest package](https://img.shields.io/npm/v/fsman/latest.svg)](https://www.npmjs.com/package/fsman)
-[![npm downloads](https://img.shields.io/npm/dm/fsman.svg)](https://www.npmjs.com/package/fsman)
-![github repo size](https://img.shields.io/github/repo-size/jooy2/fsman)
-[![Followers](https://img.shields.io/github/followers/jooy2?style=social)](https://github.com/jooy2)
-![Stars](https://img.shields.io/github/stars/jooy2/fsman?style=social)
-![Commit Count](https://img.shields.io/github/commit-activity/y/jooy2/fsman)
-![Line Count](https://img.shields.io/tokei/lines/github/jooy2/fsman)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jooy2/fsman/blob/master/LICENSE) ![Programming Language Usage](https://img.shields.io/github/languages/top/jooy2/fsman) [![npm latest package](https://img.shields.io/npm/v/fsman/latest.svg)](https://www.npmjs.com/package/fsman) [![npm downloads](https://img.shields.io/npm/dm/fsman.svg)](https://www.npmjs.com/package/fsman) ![github repo size](https://img.shields.io/github/repo-size/jooy2/fsman) [![Followers](https://img.shields.io/github/followers/jooy2?style=social)](https://github.com/jooy2) ![Stars](https://img.shields.io/github/stars/jooy2/fsman?style=social) ![Commit Count](https://img.shields.io/github/commit-activity/y/jooy2/fsman) ![Line Count](https://img.shields.io/tokei/lines/github/jooy2/fsman)
 
 ## Installation
 
@@ -18,12 +11,13 @@ $ npm i --save fsman
 ```
 
 ## Usage
+
 ```javascript
 import fsman from 'fsman';
 
-async function main () {
-    console.log(await fsman.isHidden('.hiddenFile')); // true
-    console.log(fsman.humanizeSize(1000000)); // '976.56 KB'
+async function main() {
+	console.log(await fsman.isHidden('.hiddenFile')); // true
+	console.log(fsman.humanizeSize(1000000)); // '976.56 KB'
 }
 ```
 
@@ -31,8 +25,8 @@ async function main () {
 
 ### `isHidden (Promise<Boolean>)`
 
-Checks whether a file or folder in the specified path is a hidden file.
-Determines system hidden files for Windows and the presence or absence of a `.`(dot) for Linux and macOS or other operating systems.
+Checks whether a file or folder in the specified path is a hidden file. Determines system hidden files for Windows and the presence or absence of a `.`(dot) for Linux and macOS or other operating systems.
+
 - `filePath <String>`: File or directory path
 - `isWindows <Boolean>`: Whether the target operating system to be checked is Windows
 
@@ -45,6 +39,7 @@ console.log(await fsman.isHidden('.hiddenFile', true)); // false (Files with no 
 ### `humanizeSize (<String>)`
 
 Returns the given byte argument as a human-friendly string.
+
 - `bytes <Number>`: Converts it to a human-friendly string via the bytes provided here.
 - `decimals <Number> (Default: 2)`: Specifies the number of decimal places to represent.
 
@@ -137,19 +132,18 @@ Examples of returned values:
 
 ```json5
 {
-  success: true, // Whether the file stat import was successful
-  isDirectory: false,
-  ext: 'txt',
-  size: 33,
-  sizeHumanized: '33 Bytes',
-  name: 'test.txt',
-  dirname: 'user',
-  path: '/home/user/test.txt',
-  created: 1652581984, // Unix timestamp
-  modified: 1652581984 // Unix timestamp
+	success: true, // Whether the file stat import was successful
+	isDirectory: false,
+	ext: 'txt',
+	size: 33,
+	sizeHumanized: '33 Bytes',
+	name: 'test.txt',
+	dirname: 'user',
+	path: '/home/user/test.txt',
+	created: 1652581984, // Unix timestamp
+	modified: 1652581984 // Unix timestamp
 }
 ```
-
 
 ### `touch (<Void>)`
 
@@ -204,7 +198,9 @@ console.log(await fsman.hash('/home/user/text.txt', 'sha1')); // '38851813f75627
 ```
 
 ## Contribute
+
 You can report issues on GitHub Issue. You can also request a pull to fix bugs and add frequently used features.
 
 ## License
+
 Copyright © 2022 Jooy2 Released under the MIT license.

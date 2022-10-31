@@ -1,6 +1,6 @@
 # 💾 FsMan
 
-A file system utility that can be used with Node.js fs module.
+A file system utility that can be used with **[Node.js](https://nodejs.org)** fs module.
 
 > [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jooy2/fsman/blob/master/LICENSE) ![Programming Language Usage](https://img.shields.io/github/languages/top/jooy2/fsman) [![npm latest package](https://img.shields.io/npm/v/fsman/latest.svg)](https://www.npmjs.com/package/fsman) [![npm downloads](https://img.shields.io/npm/dm/fsman.svg)](https://www.npmjs.com/package/fsman) ![github repo size](https://img.shields.io/github/repo-size/jooy2/fsman) [![Followers](https://img.shields.io/github/followers/jooy2?style=social)](https://github.com/jooy2) ![Stars](https://img.shields.io/github/stars/jooy2/fsman?style=social) ![Commit Count](https://img.shields.io/github/commit-activity/y/jooy2/fsman) ![Line Count](https://img.shields.io/tokei/lines/github/jooy2/fsman)
 
@@ -12,13 +12,13 @@ After configuring the node environment, you can simply run the following command
 
 ```shell
 # via npm
-$ npm install qsu
+$ npm install fsman
 
 # via yarn
-$ yarn add qsu
+$ yarn add fsman
 
 # via pnpm
-$ pnpm install qsu
+$ pnpm install fsman
 ```
 
 ## How to use

@@ -131,6 +131,18 @@ console.log(fsman.fileName('/home/user/test.txt')); // 'test'
 console.log(fsman.fileName('/home/user/test.txt', true)); // 'test.txt'
 ```
 
+### `normalize (<String>)`
+
+Changes a string (usually file names) according to the Unicode normalization form method used by each operating system.
+
+- `filePath <String>`: File or directory path
+- `os <'W'|'w'|'M'|'m'>`: Use the normalization method used by the specified OS (`w` for Windows, `m` for macOS)
+
+```javascript
+console.log(fsman.normalize('안녕하세요Hello.txt', 'w')); // '안녕하세요Hello.txt'
+console.log(fsman.normalize('안녕하세요Hello.txt', 'm')); // '안녕하세요Hello.txt'
+```
+
 ### `ext (<String>)`
 
 Returns the file extension from the given file path. An empty string value is returned for files without extension.

@@ -119,6 +119,18 @@ export default class FsMan {
 		return basename(filePath, extname(filePath));
 	}
 
+	static normalize(filePath: string, os: 'W' | 'M' | 'w' | 'm'): string {
+		if (!filePath || filePath.length < 1) {
+			return '';
+		}
+
+		if (!os) {
+			throw new Error(`The 'os' argument value is required.`);
+		}
+
+		return filePath.normalize(os.toLowerCase() === 'm' ? 'NFD' : 'NFC');
+	}
+
 	static ext(filePath: string): string {
 		const strPath: string = extname(filePath) || filePath;
 
@@ -272,6 +284,7 @@ export const {
 	joinPath,
 	isValidFileName,
 	fileName,
+	normalize,
 	ext,
 	stat,
 	mkdir,

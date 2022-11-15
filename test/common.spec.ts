@@ -1,4 +1,4 @@
-import * as assert from 'assert';
+import assert from 'assert';
 import {
 	isHidden,
 	humanizeSize,
@@ -6,6 +6,7 @@ import {
 	joinPath,
 	isValidFileName,
 	fileName,
+	normalize,
 	ext,
 	stat,
 	touch,
@@ -125,6 +126,15 @@ describe('fsman', () => {
 		assert.strictEqual(fileName('C:\\Users\\user\\Desktop\\hello.txt'), 'hello');
 		assert.strictEqual(fileName('C:\\Users\\user\\Desktop\\hello.txt', true), 'hello.txt');
 		assert.strictEqual(fileName('test'), 'test');
+		done();
+	});
+
+	it('normalize', (done) => {
+		const NFD = '안녕하세요_12345-ABCDE'.normalize('NFD'); // macOS
+		const NFC = '안녕하세요_12345-ABCDE'.normalize('NFC'); // Windows
+
+		assert.strictEqual(normalize(NFD, 'w'), NFC);
+		assert.strictEqual(normalize(NFC, 'm'), NFD);
 		done();
 	});
 

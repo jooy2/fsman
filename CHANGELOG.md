@@ -1,5 +1,15 @@
 # Change Log
 
+## 1.7.0 (2022-11-29)
+
+- `normalize`: Add normalize method
+- `head`: Add head method
+- `tail`: Add tail method
+
+## 1.6.1 (2022-10-31)
+
+- Fix README.md
+
 ## 1.6.0 (2022-10-29)
 
 - Support named import

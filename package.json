@@ -1,6 +1,6 @@
 {
 	"name": "fsman",
-	"version": "1.6.1",
+	"version": "1.7.0",
 	"description": "A file system utility that can be used with Node.js fs module.",
 	"homepage": "https://github.com/jooy2/fsman",
 	"type": "module",

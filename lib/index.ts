@@ -199,6 +199,31 @@ export default class FsMan {
 		return null;
 	}
 
+	static tail(filePath: string, length = 1): string | null {
+		try {
+			const content = readFileSync(filePath, 'utf-8');
+			const contentByLine = content.split('\n');
+			let result = '';
+
+			if (contentByLine[contentByLine.length - 1].length < 1) {
+				contentByLine.pop();
+			}
+
+			for (let i = contentByLine.length, len = contentByLine.length - length; i > len; i -= 1) {
+				result = `${contentByLine[i - 1]}${
+					result.length < 1 || i - 1 === len ? '' : '\n'
+				}${result}`;
+			}
+
+			return result.length < 1 ? null : result;
+		} catch (err) {
+			if (err instanceof Error) {
+				throw new Error(err.message);
+			}
+		}
+		return null;
+	}
+
 	static mkdir(filePath: string, recursive = true): void {
 		try {
 			if (!existsSync(filePath)) {
@@ -308,6 +333,7 @@ export const {
 	ext,
 	stat,
 	head,
+	tail,
 	mkdir,
 	touch,
 	rm,

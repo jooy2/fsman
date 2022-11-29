@@ -10,6 +10,7 @@ import {
 	ext,
 	stat,
 	head,
+	tail,
 	touch,
 	rm,
 	mv,
@@ -151,6 +152,16 @@ describe('fsman', () => {
 		assert.strictEqual(
 			head('test/targets/hello.md', 4),
 			'# Hello, World!\n\nThis is Hello File.\n'
+		);
+		done();
+	});
+
+	it('tail', (done) => {
+		assert.strictEqual(tail('test/targets/hello.md'), '--- Hello End ---');
+		assert.strictEqual(tail('test/targets/hello.md', 1), '--- Hello End ---');
+		assert.strictEqual(
+			tail('test/targets/hello.md', 4),
+			'Do not modify this file.\n\n--- Hello End ---'
 		);
 		done();
 	});

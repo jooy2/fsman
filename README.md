@@ -192,6 +192,17 @@ Returns the first line of the specified text file path. The `length` argument is
 console.log(fsman.head('/test/targets/hello.md')); // '# Hello, World!'
 ```
 
+### `tail (<String|Null>)`
+
+Returns the last line of the specified text file path. The `length` argument is the total number of lines to print. Default is `1`. The last line of newline characters is ignored.
+
+- `filePath <String>`: File or directory path
+- `length <number>`: Number of lines of text to return
+
+```javascript
+console.log(fsman.head('/test/targets/hello.md')); // '--- Hello End ---'
+```
+
 ### `touch (<Void>)`
 
 Create a file of empty data. If the same file already exists, it is ignored.

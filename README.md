@@ -200,7 +200,7 @@ Returns the last line of the specified text file path. The `length` argument is 
 - `length <number>`: Number of lines of text to return
 
 ```javascript
-console.log(fsman.head('/test/targets/hello.md')); // '--- Hello End ---'
+console.log(fsman.tail('/test/targets/hello.md')); // '--- Hello End ---'
 ```
 
 ### `touch (<Void>)`

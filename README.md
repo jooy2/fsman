@@ -181,6 +181,17 @@ Examples of returned values:
 }
 ```
 
+### `head (<String|Null>)`
+
+Returns the first line of the specified text file path. The `length` argument is the total number of lines to print. Default is `1`.
+
+- `filePath <String>`: File or directory path
+- `length <number>`: Number of lines of text to return
+
+```javascript
+console.log(fsman.head('/test/targets/hello.md')); // '# Hello, World!'
+```
+
 ### `touch (<Void>)`
 
 Create a file of empty data. If the same file already exists, it is ignored.

@@ -10,7 +10,8 @@ import {
 	utimesSync,
 	closeSync,
 	rmSync,
-	openSync
+	openSync,
+	readFileSync
 } from 'fs';
 import { createHash } from 'crypto';
 
@@ -179,6 +180,25 @@ export default class FsMan {
 		};
 	}
 
+	static head(filePath: string, length = 1): string | null {
+		try {
+			const content = readFileSync(filePath, 'utf-8');
+			const contentByLine = content.split('\n');
+			let result = '';
+
+			for (let i = 0, len = length; i < len; i += 1) {
+				result += `${contentByLine[i]}${length < 2 || i === len - 1 ? '' : '\n'}`;
+			}
+
+			return result.length < 1 ? null : result;
+		} catch (err) {
+			if (err instanceof Error) {
+				throw new Error(err.message);
+			}
+		}
+		return null;
+	}
+
 	static mkdir(filePath: string, recursive = true): void {
 		try {
 			if (!existsSync(filePath)) {
@@ -287,6 +307,7 @@ export const {
 	normalize,
 	ext,
 	stat,
+	head,
 	mkdir,
 	touch,
 	rm,

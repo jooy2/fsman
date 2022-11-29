@@ -9,6 +9,7 @@ import {
 	normalize,
 	ext,
 	stat,
+	head,
 	touch,
 	rm,
 	mv,
@@ -141,6 +142,16 @@ describe('fsman', () => {
 	it('stat', (done) => {
 		assert(stat('test/targets/STATIC_FILE.txt'));
 		assert(stat('test'));
+		done();
+	});
+
+	it('head', (done) => {
+		assert.strictEqual(head('test/targets/hello.md'), '# Hello, World!');
+		assert.strictEqual(head('test/targets/hello.md', 1), '# Hello, World!');
+		assert.strictEqual(
+			head('test/targets/hello.md', 4),
+			'# Hello, World!\n\nThis is Hello File.\n'
+		);
 		done();
 	});
 

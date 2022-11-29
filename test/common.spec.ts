@@ -106,10 +106,10 @@ describe('fsman', () => {
 						'b03187c2962c947de2d5d3cdaa2f25e5e1df31c5190cccf42d03759d042dd5f5a2773ca9903e122b6faaf4a53b45c419d605464abb83cbe578ed249cb558844a'
 			  };
 
-		assert.strictEqual(await hash('test/STATIC_FILE.txt'), hashTable.md5);
-		assert.strictEqual(await hash('test/STATIC_FILE.txt', 'sha1'), hashTable.sha1);
-		assert.strictEqual(await hash('test/STATIC_FILE.txt', 'sha256'), hashTable.sha256);
-		assert.strictEqual(await hash('test/STATIC_FILE.txt', 'sha512'), hashTable.sha512);
+		assert.strictEqual(await hash('test/targets/STATIC_FILE.txt'), hashTable.md5);
+		assert.strictEqual(await hash('test/targets/STATIC_FILE.txt', 'sha1'), hashTable.sha1);
+		assert.strictEqual(await hash('test/targets/STATIC_FILE.txt', 'sha256'), hashTable.sha256);
+		assert.strictEqual(await hash('test/targets/STATIC_FILE.txt', 'sha512'), hashTable.sha512);
 	});
 
 	it('ext', (done) => {
@@ -139,7 +139,7 @@ describe('fsman', () => {
 	});
 
 	it('stat', (done) => {
-		assert(stat('test/STATIC_FILE.txt'));
+		assert(stat('test/targets/STATIC_FILE.txt'));
 		assert(stat('test'));
 		done();
 	});
@@ -155,13 +155,13 @@ describe('fsman', () => {
 	});
 
 	it('mv', (done) => {
-		mv('test/MV_TEST.txt', 'test/MV_TEST_1.txt');
-		mv('test/MV_TEST_1.txt', 'test/MV_TEST.txt');
+		mv('test/targets/MV_TEST.txt', 'test/targets/MV_TEST_1.txt');
+		mv('test/targets/MV_TEST_1.txt', 'test/targets/MV_TEST.txt');
 		done();
 	});
 
 	it('empty', (done) => {
-		empty('test/EMPTY');
+		empty('test/targets/EMPTY');
 		done();
 	});
 });

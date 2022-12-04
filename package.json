@@ -2,6 +2,8 @@
 	"name": "fsman",
 	"version": "1.7.0",
 	"description": "A file system utility that can be used with Node.js fs module.",
+	"author": "Jooy2 <jooy2.contact@gmail.com>",
+	"license": "MIT",
 	"homepage": "https://github.com/jooy2/fsman",
 	"type": "module",
 	"types": "dist/index.d.ts",
@@ -50,23 +52,21 @@
 		"hash",
 		"md5"
 	],
-	"author": "Jooy2 <jootc.help@gmail.com>",
-	"license": "MIT",
 	"dependencies": {
 		"winattr": "^3.0.0"
 	},
 	"devDependencies": {
 		"@types/mocha": "^10.0.1",
-		"@types/node": "^18.11.9",
+		"@types/node": "^18.11.10",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
-		"eslint": "^8.28.0",
+		"eslint": "^8.29.0",
 		"eslint-config-airbnb": "^19.0.4",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-import": "^2.26.0",
 		"mocha": "^10.1.0",
 		"prettier": "^2.8.0",
-		"terser": "^5.16.0",
+		"terser": "^5.16.1",
 		"ts-node": "^10.9.1",
 		"typescript": "^4.9.3"
 	}

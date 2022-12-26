@@ -1,10 +1,17 @@
 {
 	"name": "fsman",
-	"version": "1.7.0",
+	"version": "1.8.0",
 	"description": "A file system utility that can be used with Node.js fs module.",
 	"author": "Jooy2 <jooy2.contact@gmail.com>",
 	"license": "MIT",
 	"homepage": "https://github.com/jooy2/fsman",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/jooy2/fsman.git"
+	},
+	"bugs": {
+		"url": "https://github.com/jooy2/fsman/issues"
+	},
 	"type": "module",
 	"types": "dist/index.d.ts",
 	"engines": {
@@ -30,10 +37,6 @@
 				"dist/index.d.ts"
 			]
 		}
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/jooy2/fsman"
 	},
 	"keywords": [
 		"file",

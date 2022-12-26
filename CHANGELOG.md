@@ -1,9 +1,10 @@
 # Change Log
 
-## 1.7.1 (2022-12-26)
+## 1.8.0 (2022-12-26)
 
 - `touchDummy`: Add touchDummy method
 - Fix README.md
+- Upgrade package dependencies
 
 ## 1.7.0 (2022-11-29)
 

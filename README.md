@@ -29,8 +29,8 @@ $ pnpm install fsman
 import { isHidden, humanizeSize } from 'fsman';
 
 async function main() {
-	console.log(await isHidden('.hiddenFile')); // true
-	console.log(humanizeSize(1000000)); // '976.56 KB'
+  console.log(await isHidden('.hiddenFile')); // true
+  console.log(humanizeSize(1000000)); // '976.56 KB'
 }
 ```
 
@@ -40,8 +40,8 @@ async function main() {
 import fsman from 'fsman';
 
 async function main() {
-	console.log(await fsman.isHidden('.hiddenFile')); // true
-	console.log(fsman.humanizeSize(1000000)); // '976.56 KB'
+  console.log(await fsman.isHidden('.hiddenFile')); // true
+  console.log(fsman.humanizeSize(1000000)); // '976.56 KB'
 }
 ```
 
@@ -168,16 +168,16 @@ Examples of returned values:
 
 ```json5
 {
-	success: true, // Whether the file stat import was successful
-	isDirectory: false,
-	ext: 'txt',
-	size: 33,
-	sizeHumanized: '33 Bytes',
-	name: 'test.txt',
-	dirname: 'user',
-	path: '/home/user/test.txt',
-	created: 1652581984, // Unix timestamp
-	modified: 1652581984 // Unix timestamp
+  success: true, // Whether the file stat import was successful
+  isDirectory: false,
+  ext: 'txt',
+  size: 33,
+  sizeHumanized: '33 Bytes',
+  name: 'test.txt',
+  dirname: 'user',
+  path: '/home/user/test.txt',
+  created: 1652581984, // Unix timestamp
+  modified: 1652581984 // Unix timestamp
 }
 ```
 

@@ -116,7 +116,7 @@ Creates a directory with the specified path. Ignores the operation if the direct
 - `recursive <Boolean?|true>`: Recursively creates all directories in the given path.
 
 ```javascript
-console.log(fsman.mkdir('/home/user/a/b/c'));
+fsman.mkdir('/home/user/a/b/c');
 ```
 
 ### `fileName (<String>)`
@@ -210,7 +210,18 @@ Create a file of empty data. If the same file already exists, it is ignored.
 - `filePath <String>`: File or directory path
 
 ```javascript
-console.log(fsman.touch('/home/user/test.txt'));
+fsman.touch('/home/user/test.txt');
+```
+
+### `touchDummy (<Void>)`
+
+Creates a file with the specified size in bytes.
+
+- `filePath <String>`: File or directory path
+- `size <number>`: Size of the file to be created (Dummy data is filled as much as the given size)
+
+```javascript
+fsman.touchDummy('/home/user/test.txt', 100000);
 ```
 
 ### `rm (<Void>)`
@@ -220,7 +231,7 @@ Delete files in the specified path. If the file does not exist in the path, it i
 - `filePath <String>`: File or directory path
 
 ```javascript
-console.log(fsman.rm('/home/user/text.txt'));
+fsman.rm('/home/user/text.txt');
 ```
 
 ### `mv (<Void>)`
@@ -231,7 +242,7 @@ Moves a file in the specified file path to another path.
 - `targetFilePath <String>`: Path of file to move
 
 ```javascript
-console.log(fsman.mv('/home/user/text.txt', '/home/user/text2.txt'));
+fsman.mv('/home/user/text.txt', '/home/user/text2.txt');
 ```
 
 ### `empty (<Void>)`
@@ -241,7 +252,7 @@ Deletes all files in the specified directory path. However, the directory is pre
 - `directoryPath <String>`: Directory path
 
 ```javascript
-console.log(fsman.empty('/home/user/Downloads'));
+fsman.empty('/home/user/Downloads');
 ```
 
 ### `hash (Promise<String>)`

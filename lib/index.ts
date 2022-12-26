@@ -11,7 +11,8 @@ import {
 	closeSync,
 	rmSync,
 	openSync,
-	readFileSync
+	readFileSync,
+	writeSync
 } from 'fs';
 import { createHash } from 'crypto';
 
@@ -252,6 +253,32 @@ export default class FsMan {
 		}
 	}
 
+	static touchDummy(filePath: string, size: number): Promise<boolean> {
+		return new Promise((resolve, reject) => {
+			if (!size || size < 0) {
+				reject(new Error('Size must set 1 or higher.'));
+				return;
+			}
+
+			if (size === 0) {
+				FsMan.touch(filePath);
+				resolve(true);
+				return;
+			}
+
+			try {
+				const data = openSync(filePath, 'w');
+
+				writeSync(data, Buffer.alloc(1), 0, 1, size - 1);
+				closeSync(data);
+
+				resolve(true);
+			} catch (err) {
+				reject(err);
+			}
+		});
+	}
+
 	static rm(filePath: string): void {
 		if (!filePath) {
 			return;
@@ -336,6 +363,7 @@ export const {
 	tail,
 	mkdir,
 	touch,
+	touchDummy,
 	rm,
 	mv,
 	empty,

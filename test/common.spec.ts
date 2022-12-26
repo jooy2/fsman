@@ -12,6 +12,7 @@ import {
 	head,
 	tail,
 	touch,
+	touchDummy,
 	rm,
 	mv,
 	empty,
@@ -167,13 +168,27 @@ describe('fsman', () => {
 	});
 
 	it('touch', (done) => {
-		touch('./__TEST__TOUCH_FILE.txt');
+		touch('test/targets/__TEST__TOUCH_FILE.txt');
 		done();
 	});
 
 	it('rm', (done) => {
-		rm('./__TEST__TOUCH_FILE.txt');
+		rm('test/targets/__TEST__TOUCH_FILE.txt');
 		done();
+	});
+
+	it('touchDummy', async () => {
+		const dummyFilePath = 'test/targets/__TEST__TOUCH_FILE.txt';
+
+		await touchDummy(dummyFilePath, 100);
+
+		const dummyFileStat = stat(dummyFilePath);
+
+		rm(dummyFilePath);
+
+		if (dummyFileStat.size !== 100) {
+			assert.fail('Test Failed. Dummy file not created correctly.');
+		}
 	});
 
 	it('mv', (done) => {

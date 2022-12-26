@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.7.1 (2022-12-26)
+
+- `touchDummy`: Add touchDummy method
+- Fix README.md
+
 ## 1.7.0 (2022-11-29)
 
 - `normalize`: Add normalize method

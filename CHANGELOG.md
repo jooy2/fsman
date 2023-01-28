@@ -1,6 +1,6 @@
 # Change Log
 
-## 1.8.1 (2023-01-)
+## 1.8.1 (2023-01-28)
 
 - `ext`: String always return lower case
 

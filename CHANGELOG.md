@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.8.1 (2023-01-)
+
+- `ext`: String always return lower case
+
 ## 1.8.0 (2022-12-26)
 
 - `touchDummy`: Add touchDummy method

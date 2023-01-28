@@ -140,7 +140,7 @@ export default class FsMan {
 			return '';
 		}
 
-		return strPath.split('.')?.pop() || '';
+		return strPath.split('.')?.pop()?.toLowerCase() || '';
 	}
 
 	static stat(filePath: string): FileStat {

@@ -119,6 +119,8 @@ describe('fsman', () => {
 		assert.strictEqual(ext('test/sample.txt'), 'txt');
 		assert.strictEqual(ext('test.txt.sample'), 'sample');
 		assert.strictEqual(ext('test'), '');
+		assert.strictEqual(ext('TEST.FILE.TXT'), 'txt');
+		assert.strictEqual(ext('test..txt..png'), 'png');
 		done();
 	});
 

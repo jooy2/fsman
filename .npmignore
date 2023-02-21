@@ -18,7 +18,7 @@ CODE_OF_CONDUCT.md
 .git/
 .terserrc
 .eslintignore
-.eslintrc.cjs
+.eslintrc.json
 .prettierignore
 .prettierrc
 .mocharc.json

@@ -1,5 +1,5 @@
 import { get as getAttr } from 'winattr';
-import { join, resolve as pathResolve, extname, basename, dirname, win32 } from 'path';
+import { join, resolve as pathResolve, extname, basename, dirname, win32, sep } from 'path';
 import {
 	statSync,
 	mkdirSync,
@@ -134,7 +134,13 @@ export default class FsMan {
 	}
 
 	static ext(filePath: string): string {
-		const strPath: string = extname(filePath) || filePath;
+		let strPath: string | undefined = filePath.split(sep).pop();
+
+		if (!strPath) {
+			return '';
+		}
+
+		strPath = extname(strPath) || strPath;
 
 		if (strPath.indexOf('.') === -1) {
 			return '';

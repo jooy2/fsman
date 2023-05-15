@@ -116,7 +116,11 @@ describe('fsman', () => {
 	});
 
 	it('ext', (done) => {
+		assert.strictEqual(ext('test.123/sample.txt'), 'txt');
+		assert.strictEqual(ext('test.123/sample'), '');
 		assert.strictEqual(ext('test/sample.txt'), 'txt');
+		assert.strictEqual(ext('test/hello.1/sample.txt'), 'txt');
+		assert.strictEqual(ext('test/sample'), '');
 		assert.strictEqual(ext('test.txt.sample'), 'sample');
 		assert.strictEqual(ext('test'), '');
 		assert.strictEqual(ext('TEST.FILE.TXT'), 'txt');

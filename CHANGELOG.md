@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.8.2 (2023-05-15)
+
+- `ext`: Fix getting wrong extension if the folder path contains a dot
+
 ## 1.8.1 (2023-01-28)
 
 - `ext`: String always return lower case

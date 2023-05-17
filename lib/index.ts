@@ -133,8 +133,8 @@ export default class FsMan {
 		return filePath.normalize(os.toLowerCase() === 'm' ? 'NFD' : 'NFC');
 	}
 
-	static ext(filePath: string): string {
-		let strPath: string | undefined = filePath.split(sep).pop();
+	static ext(filePath: string, isWindows?: boolean): string {
+		let strPath: string | undefined = filePath.split(isWindows ? '\\' : '/').pop();
 
 		if (!strPath) {
 			return '';

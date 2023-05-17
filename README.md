@@ -148,6 +148,7 @@ console.log(fsman.normalize('안녕하세요Hello.txt', 'm')); // '안녕하세�
 Returns the file extension from the given file path. An empty string value is returned for files without extension.
 
 - `filePath <String>`: File or directory path
+- `isWindows <Boolean?|false>`: If the given file path is a Windows system path
 
 ```javascript
 console.log(fsman.ext('/home/user/test.txt')); // 'txt'

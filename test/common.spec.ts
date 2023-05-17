@@ -125,6 +125,11 @@ describe('fsman', () => {
 		assert.strictEqual(ext('test'), '');
 		assert.strictEqual(ext('TEST.FILE.TXT'), 'txt');
 		assert.strictEqual(ext('test..txt..png'), 'png');
+		assert.strictEqual(ext('txt', true), '');
+		assert.strictEqual(ext('txt.png', true), 'png');
+		assert.strictEqual(ext('C:\\test\\txt.png', true), 'png');
+		assert.strictEqual(ext('C:\\test.hello.sample\\txt', true), '');
+		assert.strictEqual(ext('C:\\test.hello.sample\\txt.txt', true), 'txt');
 		done();
 	});
 

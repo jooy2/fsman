@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.8.3 (2023-05-17)
+
+- `ext`: Fix getting wrong extension when using windows
+- Remove dependent module
+
 ## 1.8.2 (2023-05-15)
 
 - `ext`: Fix getting wrong extension if the folder path contains a dot

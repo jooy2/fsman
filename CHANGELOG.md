@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.8.4 (2023-05-17)
+
+- Remove unnecessary files
+
 ## 1.8.3 (2023-05-17)
 
 - `ext`: Fix getting wrong extension when using windows

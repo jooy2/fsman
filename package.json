@@ -55,9 +55,6 @@
 		"hash",
 		"md5"
 	],
-	"dependencies": {
-		"winattr": "^3.0.0"
-	},
 	"devDependencies": {
 		"@types/mocha": "^10.0.1",
 		"@types/node": "^20.1.4",

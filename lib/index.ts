@@ -1,4 +1,4 @@
-import { get as getAttr } from 'winattr';
+import { spawn } from 'child_process';
 import { join, resolve as pathResolve, extname, basename, dirname, win32, sep } from 'path';
 import {
 	statSync,
@@ -20,8 +20,45 @@ export default class FsMan {
 	static isHidden(filePath: string, isWindows = false): Promise<boolean> {
 		return new Promise<boolean>((resolve) => {
 			if (isWindows) {
-				getAttr(filePath, (error: Error, data: Attributes) => {
-					resolve(!error && data.hidden);
+				const instance = spawn('cscript', [
+					`${__dirname}/hostscript.js`,
+					filePath,
+					'//nologo',
+					'//E:jscript'
+				]);
+
+				let stderr = '';
+				let stdout = '';
+
+				instance.stderr.on('data', (data) => {
+					stderr += data.toString();
+				});
+
+				instance.stdout.on('data', (data) => {
+					stdout += data.toString();
+				});
+
+				instance.on('exit', () => {
+					// Parse file attribute check response
+					stdout = stdout.trim();
+					if (stdout.length <= 0) {
+						resolve(false);
+						return;
+					}
+
+					const fileAttributes = JSON.parse(stdout);
+
+					if (
+						!fileAttributes ||
+						Object.keys(fileAttributes).length < 1 ||
+						fileAttributes.error ||
+						fileAttributes.hidden === null
+					) {
+						resolve(false);
+						return;
+					}
+
+					resolve(fileAttributes.hidden);
 				});
 			} else {
 				resolve(/(^|\/)\.[^/.]/.test(filePath.split('/')?.pop() || '/'));

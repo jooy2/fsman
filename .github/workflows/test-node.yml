@@ -47,6 +47,13 @@ jobs:
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm i
 
+      # build
+      - name: Build module script
+        run: npm run build
+
+      - name: Copy and replace string index.md file
+        run: cp ../lib/windows-is-hidden-file.js ./dist
+
       # run test
       - name: Test module script
-        run: npm run test
+        run: npm run test:only

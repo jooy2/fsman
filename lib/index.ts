@@ -1,5 +1,5 @@
 import { spawn } from 'child_process';
-import { join, resolve as pathResolve, extname, basename, dirname, win32, sep } from 'path';
+import { join, resolve as pathResolve, extname, basename, dirname, win32 } from 'path';
 import {
 	statSync,
 	mkdirSync,
@@ -21,18 +21,13 @@ export default class FsMan {
 		return new Promise<boolean>((resolve) => {
 			if (isWindows) {
 				const instance = spawn('cscript', [
-					`${__dirname}/hostscript.js`,
+					`window-is-hidden-file.js`,
 					filePath,
 					'//nologo',
 					'//E:jscript'
 				]);
 
-				let stderr = '';
 				let stdout = '';
-
-				instance.stderr.on('data', (data) => {
-					stderr += data.toString();
-				});
 
 				instance.stdout.on('data', (data) => {
 					stdout += data.toString();

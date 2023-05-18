@@ -19,6 +19,7 @@
 	},
 	"scripts": {
 		"build": "npm run format:fix && tsc --project tsconfig.prod.json && npm run minify",
+		"test:only": "mocha test/*.spec.ts -r ts-node/register --loader=ts-node/esm --timeout 10000",
 		"test": "npm run build && mocha test/*.spec.ts -r ts-node/register --loader=ts-node/esm --timeout 10000",
 		"lint": "eslint .",
 		"lint:fix": "eslint --fix .",

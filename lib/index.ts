@@ -25,7 +25,7 @@ export default class FsMan {
 				const currentDirname = dirname(filename);
 
 				const instance = spawn('cscript', [
-					`${currentDirname}/window-is-hidden-file.js`,
+					`${currentDirname}/lib/window-is-hidden-file.js`,
 					filePath,
 					'//nologo',
 					'//E:jscript'

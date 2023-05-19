@@ -52,7 +52,7 @@ jobs:
         run: npm run build
 
       - name: Copy and replace string index.md file
-        run: cp ../lib/windows-is-hidden-file.js ./dist
+        run: cp ./lib/windows-is-hidden-file.js ./dist
 
       # run test
       - name: Test module script

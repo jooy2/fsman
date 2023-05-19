@@ -15,17 +15,13 @@ import {
 	writeSync
 } from 'fs';
 import { createHash } from 'crypto';
-import { fileURLToPath } from 'url';
 
 export default class FsMan {
 	static isHidden(filePath: string, isWindows = false): Promise<boolean> {
 		return new Promise<boolean>((resolve) => {
 			if (isWindows) {
-				const filename = fileURLToPath(import.meta.url);
-				const currentDirname = dirname(filename);
-
 				const instance = spawn('cscript', [
-					`${currentDirname}/windows-hidden-check.js`,
+					`windows-hidden-check.js`,
 					filePath,
 					'//nologo',
 					'//E:jscript'
@@ -45,13 +41,11 @@ export default class FsMan {
 						return;
 					}
 
-					console.log(stdout);
 					let fileAttributes;
 
 					try {
 						fileAttributes = JSON.parse(stdout);
 					} catch (e) {
-						console.log(e);
 						resolve(false);
 						return;
 					}
@@ -59,7 +53,7 @@ export default class FsMan {
 					if (
 						!fileAttributes ||
 						Object.keys(fileAttributes).length < 1 ||
-						fileAttributes.error ||
+						fileAttributes.err ||
 						fileAttributes.hidden === null
 					) {
 						resolve(false);

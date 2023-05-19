@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.9.0 (2023-05-19)
+
+- `isHidden`: Fix not working correctly
+
 ## 1.8.4 (2023-05-17)
 
 - Remove unnecessary files

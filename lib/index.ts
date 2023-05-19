@@ -15,17 +15,13 @@ import {
 	writeSync
 } from 'fs';
 import { createHash } from 'crypto';
-import { fileURLToPath } from 'url';
 
 export default class FsMan {
 	static isHidden(filePath: string, isWindows = false): Promise<boolean> {
 		return new Promise<boolean>((resolve) => {
 			if (isWindows) {
-				const filename = fileURLToPath(import.meta.url);
-				const currentDirname = dirname(filename);
-
 				const instance = spawn('cscript', [
-					`${currentDirname}/lib/window-is-hidden-file.js`,
+					`window-is-hidden-file.js`,
 					filePath,
 					'//nologo',
 					'//E:jscript'

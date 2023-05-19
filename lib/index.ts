@@ -21,7 +21,7 @@ export default class FsMan {
 		return new Promise<boolean>((resolve) => {
 			if (isWindows) {
 				const instance = spawn('cscript', [
-					`windows-hidden-check.js`,
+					`lib\\windows-hidden-check.js`,
 					filePath,
 					'//nologo',
 					'//E:jscript'
@@ -53,14 +53,14 @@ export default class FsMan {
 					if (
 						!fileAttributes ||
 						Object.keys(fileAttributes).length < 1 ||
-						fileAttributes.err ||
-						fileAttributes.hidden === null
+						fileAttributes.e ||
+						fileAttributes.h === null
 					) {
 						resolve(false);
 						return;
 					}
 
-					resolve(fileAttributes.hidden);
+					resolve(fileAttributes.h);
 				});
 			} else {
 				resolve(/(^|\/)\.[^/.]/.test(filePath.split('/')?.pop() || '/'));

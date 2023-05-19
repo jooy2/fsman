@@ -18,7 +18,7 @@
 		"node": ">=14.0.0"
 	},
 	"scripts": {
-		"build": "npm run format:fix && tsc --allowJs --project tsconfig.prod.json && npm run minify",
+		"build": "rimraf dist/ && npm run format:fix && tsc --allowJs --project tsconfig.prod.json && npm run minify",
 		"test": "npm run build && mocha test/*.spec.ts -r ts-node/register --loader=ts-node/esm --timeout 10000",
 		"lint": "eslint .",
 		"lint:fix": "eslint --fix .",
@@ -66,6 +66,7 @@
 		"eslint-plugin-import": "^2.27.5",
 		"mocha": "^10.2.0",
 		"prettier": "^2.8.8",
+		"rimraf": "^5.0.1",
 		"terser": "^5.17.3",
 		"ts-node": "^10.9.1",
 		"typescript": "^5.0.4"

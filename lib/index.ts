@@ -41,7 +41,16 @@ export default class FsMan {
 						return;
 					}
 
-					const fileAttributes = JSON.parse(stdout);
+					console.log(stdout);
+					let fileAttributes;
+
+					try {
+						fileAttributes = JSON.parse(stdout);
+					} catch (e) {
+						console.log(e);
+						resolve(false);
+						return;
+					}
 
 					if (
 						!fileAttributes ||

@@ -166,7 +166,7 @@ export default class FsMan {
 		}
 
 		if (!os) {
-			throw new Error(`The 'os' argument value is required.`);
+			throw new Error('The `os` argument value is required.');
 		}
 
 		return filePath.normalize(os.toLowerCase() === 'm' ? 'NFD' : 'NFC');

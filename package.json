@@ -67,7 +67,7 @@
 		"mocha": "^10.2.0",
 		"prettier": "^2.8.8",
 		"rimraf": "^5.0.1",
-		"terser": "^5.17.4",
+		"terser": "^5.18.2",
 		"ts-node": "^10.9.1",
 		"typescript": "^5.0.4"
 	}

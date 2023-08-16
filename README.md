@@ -86,6 +86,19 @@ console.log(fsman.resolvePath('C:\\Windows\\System32\\'), true); // 'C:\Windows\
 console.log(fsman.resolvePath('home/user/.bashrc')); // '/home/user/.bashrc'
 ```
 
+### `getPathLevel (<Number>)`
+
+Determine how many steps the current path is. The root path (`/` or `C:\`) begins with step 1.
+
+- `filePath <String>`: File or directory path
+
+```javascript
+// Include 'C:\' root path
+console.log(fsman.getPathLevel('C:\\Windows\\System32')); // 3
+// Include '/' root path
+console.log(fsman.getPathLevel('/home/user')); // 3
+```
+
 ### `toPosixPath (<String>)`
 
 Returns the given path as a path in POSIX format (usually used by Linux). For example, a Windows path will be converted to `/' instead of `\\`.

@@ -1,5 +1,5 @@
 import { spawn } from 'child_process';
-import { join, resolve as pathResolve, extname, basename, dirname, win32 } from 'path';
+import { join, resolve as pathResolve, extname, basename, dirname, win32, sep, posix } from 'path';
 import {
 	statSync,
 	mkdirSync,
@@ -124,6 +124,18 @@ export default class FsMan {
 		}
 
 		return FsMan.resolvePath(fullPath, false);
+	}
+
+	static getPathLevel(filePath: string): number {
+		if (!filePath) {
+			return -1;
+		}
+
+		if (filePath === '/') {
+			return 1;
+		}
+
+		return FsMan.toPosixPath(filePath.replace(/\\+$/, '')).split(posix.sep).length;
 	}
 
 	static toPosixPath(filePath: string): string {
@@ -406,6 +418,7 @@ export const {
 	humanizeSize,
 	resolvePath,
 	joinPath,
+	getPathLevel,
 	toPosixPath,
 	isValidFileName,
 	fileName,

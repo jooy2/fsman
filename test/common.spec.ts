@@ -4,6 +4,7 @@ import {
 	humanizeSize,
 	resolvePath,
 	joinPath,
+	getPathLevel,
 	toPosixPath,
 	isValidFileName,
 	fileName,
@@ -63,6 +64,17 @@ describe('fsman', () => {
 		assert.strictEqual(joinPath(true, 'C:\\Users\\test'), 'C:\\Users\\test');
 		assert.strictEqual(joinPath(false, '/home', 'user', 'Desktop'), '/home/user/Desktop');
 		assert.strictEqual(joinPath(false, 'home', '/user', '.bashrc'), '/home/user/.bashrc');
+		done();
+	});
+
+	it('getPathLevel', (done) => {
+		assert.strictEqual(getPathLevel('C:'), 1);
+		assert.strictEqual(getPathLevel('C:\\'), 1);
+		assert.strictEqual(getPathLevel('C:\\Windows\\System32'), 3);
+		assert.strictEqual(getPathLevel(LONG_PATH), 7);
+		assert.strictEqual(getPathLevel('/'), 1);
+		assert.strictEqual(getPathLevel('/home/user'), 3);
+		assert.strictEqual(getPathLevel('/home/user/.ssh/test file.txt'), 5);
 		done();
 	});
 

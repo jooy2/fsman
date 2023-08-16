@@ -3,6 +3,7 @@
 ## 1.10.0 (2023-08-17)
 
 - `toPosixPath`: Add toPosixPath method
+- `getPathLevel`: Add getPathLevel method
 
 ## 1.9.0 (2023-05-19)
 

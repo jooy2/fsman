@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.10.0 (2023-08-17)
+
+- `toPosixPath`: Add toPosixPath method
+
 ## 1.9.0 (2023-05-19)
 
 - `isHidden`: Fix not working correctly

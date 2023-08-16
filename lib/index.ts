@@ -126,6 +126,13 @@ export default class FsMan {
 		return FsMan.resolvePath(fullPath, false);
 	}
 
+	static toPosixPath(filePath: string): string {
+		return filePath
+			.replace(/^\\\\\?\\/, '')
+			.replace(/\\/g, '/')
+			.replace(/\/\/+/g, '/');
+	}
+
 	static isValidFileName(filePath: string, unixType?: boolean): boolean {
 		let fileNameRegex;
 		const fileName = FsMan.fileName(filePath);
@@ -399,6 +406,7 @@ export const {
 	humanizeSize,
 	resolvePath,
 	joinPath,
+	toPosixPath,
 	isValidFileName,
 	fileName,
 	normalize,

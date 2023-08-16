@@ -4,6 +4,7 @@ import {
 	humanizeSize,
 	resolvePath,
 	joinPath,
+	toPosixPath,
 	isValidFileName,
 	fileName,
 	normalize,
@@ -20,6 +21,8 @@ import {
 } from '../dist';
 
 const IS_WINDOWS_OS = process.platform === 'win32';
+const LONG_PATH =
+	'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\115.0.1901.203\\Trust Protection Lists';
 
 describe('fsman', () => {
 	it('isHidden', async () => {
@@ -60,6 +63,19 @@ describe('fsman', () => {
 		assert.strictEqual(joinPath(true, 'C:\\Users\\test'), 'C:\\Users\\test');
 		assert.strictEqual(joinPath(false, '/home', 'user', 'Desktop'), '/home/user/Desktop');
 		assert.strictEqual(joinPath(false, 'home', '/user', '.bashrc'), '/home/user/.bashrc');
+		done();
+	});
+
+	it('toPosixPath', (done) => {
+		assert.strictEqual(toPosixPath('\\\\Shared'), '/Shared');
+		assert.strictEqual(toPosixPath('C:\\'), 'C:/');
+		assert.strictEqual(toPosixPath('C:\\Windows\\System32'), 'C:/Windows/System32');
+		assert.strictEqual(toPosixPath('Windows\\System32'), 'Windows/System32');
+		assert.strictEqual(
+			toPosixPath(LONG_PATH),
+			'C:/Program Files (x86)/Microsoft/Edge/Application/115.0.1901.203/Trust Protection Lists'
+		);
+		assert.strictEqual(toPosixPath('/home/user/Test file.txt'), '/home/user/Test file.txt');
 		done();
 	});
 

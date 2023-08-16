@@ -86,6 +86,16 @@ console.log(fsman.resolvePath('C:\\Windows\\System32\\'), true); // 'C:\Windows\
 console.log(fsman.resolvePath('home/user/.bashrc')); // '/home/user/.bashrc'
 ```
 
+### `toPosixPath (<String>)`
+
+Returns the given path as a path in POSIX format (usually used by Linux). For example, a Windows path will be converted to `/' instead of `\\`.
+
+- `filePath <String>`: File or directory path
+
+```javascript
+console.log(fsman.toPosixPath('C:\\Windows\\System32')); // 'C:/Windows/System32'
+```
+
 ### `joinPath (<String>)`
 
 Combines paths for each operating system according to the given parameter values.

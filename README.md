@@ -101,7 +101,7 @@ console.log(fsman.getPathLevel('/home/user')); // 3
 
 ### `toPosixPath (<String>)`
 
-Returns the given path as a path in POSIX format (usually used by Linux). For example, a Windows path will be converted to `/' instead of `\\`.
+Returns the given path as a path in POSIX format (usually used by Linux). For example, a Windows path will be converted to `/` instead of `\\`.
 
 - `filePath <String>`: File or directory path
 

@@ -1,5 +1,5 @@
 import { spawn } from 'child_process';
-import { join, resolve as pathResolve, extname, basename, dirname, win32, sep, posix } from 'path';
+import { join, resolve as pathResolve, extname, basename, dirname, win32, posix } from 'path';
 import {
 	statSync,
 	mkdirSync,
@@ -185,7 +185,7 @@ export default class FsMan {
 		}
 
 		if (!os) {
-			throw new Error('The `os` argument value is required.');
+			throw new Error('`os` param required');
 		}
 
 		return filePath.normalize(os.toLowerCase() === 'm' ? 'NFD' : 'NFC');
@@ -320,7 +320,7 @@ export default class FsMan {
 	static touchDummy(filePath: string, size: number): Promise<boolean> {
 		return new Promise((resolve, reject) => {
 			if (!size || size < 0) {
-				reject(new Error('Size must set 1 or higher.'));
+				reject(new Error('Size is required'));
 				return;
 			}
 
@@ -389,7 +389,7 @@ export default class FsMan {
 	): Promise<string> {
 		return new Promise((resolve, reject) => {
 			if (!filePath) {
-				reject(new Error('Invalid filePath.'));
+				reject(new Error('Invalid path'));
 				return;
 			}
 

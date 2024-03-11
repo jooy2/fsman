@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.11.0 (2024-03-11)
+
+- BREAKING CHANGE: `normalize` now requires the `normalizationForm` value to be entered directly instead of the `os` argument value. If specified as `undefined`, it defaults to `NFC` (e.g. `NFC`, `NFD`...)
+- `isHidden`: Reduce the load by using a faster, simpler algorithm.
+
 ## 1.10.0 (2023-08-17)
 
 - `toPosixPath`: Add toPosixPath method

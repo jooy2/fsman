@@ -1,4 +1,4 @@
-import { spawn } from 'child_process';
+import { exec } from 'child_process';
 import { join, resolve as pathResolve, extname, basename, dirname, win32, posix } from 'path';
 import {
 	statSync,
@@ -20,47 +20,12 @@ export default class FsMan {
 	static isHidden(filePath: string, isWindows = false): Promise<boolean> {
 		return new Promise<boolean>((resolve) => {
 			if (isWindows) {
-				const instance = spawn('cscript', [
-					`lib\\windows-hidden-check.js`,
-					filePath,
-					'//nologo',
-					'//E:jscript'
-				]);
-
-				let stdout = '';
-
-				instance.stdout.on('data', (data) => {
-					stdout += data.toString();
-				});
-
-				instance.on('exit', () => {
-					// Parse file attribute check response
-					stdout = stdout.trim();
-					if (stdout.length <= 0) {
+				exec(`attrib "${filePath}"`, (error, stdout, stderr) => {
+					if (error || stderr || !stdout) {
 						resolve(false);
 						return;
 					}
-
-					let fileAttributes;
-
-					try {
-						fileAttributes = JSON.parse(stdout);
-					} catch (e) {
-						resolve(false);
-						return;
-					}
-
-					if (
-						!fileAttributes ||
-						Object.keys(fileAttributes).length < 1 ||
-						fileAttributes.e ||
-						fileAttributes.h === null
-					) {
-						resolve(false);
-						return;
-					}
-
-					resolve(fileAttributes.h);
+					resolve(stdout.replace(filePath, '').includes('H'));
 				});
 			} else {
 				resolve(/(^|\/)\.[^/.]/.test(filePath.split('/')?.pop() || '/'));

@@ -16,6 +16,19 @@ import {
 } from 'fs';
 import { createHash } from 'crypto';
 
+interface FileStat {
+	success: boolean;
+	isDirectory: boolean;
+	size: number;
+	sizeHumanized: string;
+	name: string;
+	dirname: string;
+	path: string;
+	ext: string;
+	created: number;
+	modified: number;
+}
+
 export default class FsMan {
 	static isHidden(filePath: string, isWindows = false): Promise<boolean> {
 		return new Promise<boolean>((resolve) => {

@@ -175,8 +175,8 @@ describe('fsman', () => {
 		const NFD = '안녕하세요_12345-ABCDE'.normalize('NFD'); // macOS
 		const NFC = '안녕하세요_12345-ABCDE'.normalize('NFC'); // Windows
 
-		assert.strictEqual(normalize(NFD, 'w'), NFC);
-		assert.strictEqual(normalize(NFC, 'm'), NFD);
+		assert.strictEqual(normalize(NFD, 'NFC'), NFC);
+		assert.strictEqual(normalize(NFC, 'NFD'), NFD);
 		done();
 	});
 

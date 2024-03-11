@@ -144,16 +144,17 @@ export default class FsMan {
 		return basename(filePath, extname(filePath));
 	}
 
-	static normalize(filePath: string, os: 'W' | 'M' | 'w' | 'm'): string {
+	// NFD - macOS
+	// NFC - Windows
+	static normalize(
+		filePath: string,
+		normalizationForm?: 'NFD' | 'NFC' | 'NFKC' | 'NFKD' | undefined
+	): string {
 		if (!filePath || filePath.length < 1) {
 			return '';
 		}
 
-		if (!os) {
-			throw new Error('`os` param required');
-		}
-
-		return filePath.normalize(os.toLowerCase() === 'm' ? 'NFD' : 'NFC');
+		return filePath.normalize(normalizationForm);
 	}
 
 	static ext(filePath: string, isWindows?: boolean): string {

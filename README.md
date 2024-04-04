@@ -74,7 +74,7 @@ console.log(await fsman.humanizeSize(1000000)); // '976.56 KB'
 console.log(await fsman.humanizeSize(100000000, 3)); // '95.367 MB'
 ```
 
-### `resolvePath (<String>)`
+### `toValidPath (<String>)`
 
 Remove invalid or unnecessary characters in the path.
 
@@ -82,8 +82,8 @@ Remove invalid or unnecessary characters in the path.
 - `isWindows <Boolean>`: Whether the target operating system to be checked is Windows
 
 ```javascript
-console.log(fsman.resolvePath('C:\\Windows\\System32\\'), true); // 'C:\Windows\System32'
-console.log(fsman.resolvePath('home/user/.bashrc')); // '/home/user/.bashrc'
+console.log(fsman.toValidPath('C:\\Windows\\System32\\'), true); // 'C:\Windows\System32'
+console.log(fsman.toValidPath('home/user/.bashrc')); // '/home/user/.bashrc'
 ```
 
 ### `getPathLevel (<Number>)`

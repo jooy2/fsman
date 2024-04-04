@@ -2,7 +2,7 @@ import assert from 'assert';
 import {
 	isHidden,
 	humanizeSize,
-	resolvePath,
+	toValidPath,
 	joinPath,
 	getPathLevel,
 	toPosixPath,
@@ -46,15 +46,18 @@ describe('fsman', () => {
 		done();
 	});
 
-	it('resolvePath', (done) => {
-		assert.strictEqual(resolvePath('home'), '/home');
-		assert.strictEqual(resolvePath('/home//test/'), '/home/test');
-		assert.strictEqual(resolvePath('home/test/.conf'), '/home/test/.conf');
-		assert.strictEqual(resolvePath('/'), '/');
-		assert.strictEqual(resolvePath('C:\\\\Users\\test\\', true), 'C:\\Users\\test');
-		assert.strictEqual(resolvePath('C:\\Users\\test\\.config', true), 'C:\\Users\\test\\.config');
-		assert.strictEqual(resolvePath('\\Users\\test\\.config', true), '\\Users\\test\\.config');
-		assert.strictEqual(resolvePath('C:', true), 'C:');
+	it('toValidPath', (done) => {
+		assert.strictEqual(toValidPath('home'), '/home');
+		assert.strictEqual(toValidPath('/home//test/'), '/home/test');
+		assert.strictEqual(toValidPath('home/test/.conf'), '/home/test/.conf');
+		assert.strictEqual(toValidPath('/'), '/');
+		assert.strictEqual(toValidPath('C:\\\\Users\\test\\', true), 'C:\\Users\\test');
+		assert.strictEqual(toValidPath('C:\\Users\\test\\.config', true), 'C:\\Users\\test\\.config');
+		assert.strictEqual(toValidPath('\\Users\\test\\.config', true), '\\Users\\test\\.config');
+		assert.strictEqual(toValidPath('Users\\test\\.config', true), '\\Users\\test\\.config');
+		assert.strictEqual(toValidPath('C:', true), 'C:\\');
+		assert.strictEqual(toValidPath('C:\\\\', true), 'C:\\');
+		assert.strictEqual(toValidPath('C:\\Users\\', true), 'C:\\Users');
 		done();
 	});
 

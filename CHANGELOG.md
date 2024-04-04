@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.11.1 (2024--)
+
+- `toValidPath`: `resolvePath` method renamed to `toValidPath`
+- `toValidPath`: Fix incorrect path retuning on Windows
+
 ## 1.11.0 (2024-03-11)
 
 - BREAKING CHANGE: `normalize` now requires the `normalizationForm` value to be entered directly instead of the `os` argument value. If specified as `undefined`, it defaults to `NFC` (e.g. `NFC`, `NFD`...)

@@ -60,16 +60,20 @@ export default class FsMan {
 		}`;
 	}
 
-	static resolvePath(filePath: string, isWindows?: boolean): string {
+	static toValidPath(filePath: string, isWindows?: boolean): string {
 		if (isWindows) {
 			let windowsPath = filePath;
 
-			if (windowsPath.length > 2 && !/[a-zA-Z]:\\/.test(windowsPath)) {
+			if (windowsPath.length > 2 && !/^[a-zA-Z]:/.test(windowsPath)) {
 				windowsPath = `\\${windowsPath}`;
 			}
 
-			if (windowsPath.length > 2 && /\\$/.test(windowsPath)) {
+			if ((windowsPath.match(/\\/g) || []).length > 1 && /\\$/.test(windowsPath)) {
 				windowsPath = windowsPath.replace(/\\$/, '');
+			}
+
+			if (/^[a-zA-Z]:$/.test(windowsPath)) {
+				windowsPath = `${windowsPath}\\`;
 			}
 
 			return windowsPath.replace(/\\{2,}/g, '\\');
@@ -92,7 +96,7 @@ export default class FsMan {
 
 	static joinPath(isWindows: boolean, ...paths: string[]): string {
 		if (isWindows) {
-			return FsMan.resolvePath(isWindows ? win32.join(...paths) : join(...paths), true);
+			return FsMan.toValidPath(isWindows ? win32.join(...paths) : join(...paths), true);
 		}
 
 		let fullPath = '';
@@ -101,7 +105,7 @@ export default class FsMan {
 			fullPath = `${fullPath}/${paths[i]}`;
 		}
 
-		return FsMan.resolvePath(fullPath, false);
+		return FsMan.toValidPath(fullPath, false);
 	}
 
 	static getPathLevel(filePath: string): number {
@@ -395,7 +399,7 @@ export { FsMan };
 export const {
 	isHidden,
 	humanizeSize,
-	resolvePath,
+	toValidPath,
 	joinPath,
 	getPathLevel,
 	toPosixPath,

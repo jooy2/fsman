@@ -191,7 +191,7 @@ export default class FsMan {
 	}
 
 	static stat(filePath: string): FileStat {
-		const dateToUnixTime = (date: Date) => Math.floor(new Date(date).getTime() / 1000);
+		const dateToUnixTime = (date: Date): number => Math.floor(new Date(date).getTime() / 1000);
 
 		try {
 			const fileItem = statSync(filePath);

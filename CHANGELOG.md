@@ -1,9 +1,10 @@
 # Change Log
 
-## 1.11.1 (2024--)
+## 1.12.0 (2024--)
 
 - `toValidPath`: `resolvePath` method renamed to `toValidPath`
 - `toValidPath`: Fix incorrect path retuning on Windows
+- `getParentPath`: Add getParentPath method
 
 ## 1.11.0 (2024-03-11)
 

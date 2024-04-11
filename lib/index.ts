@@ -120,6 +120,25 @@ export default class FsMan {
 		return FsMan.toPosixPath(filePath.replace(/\\+$/, '')).split(posix.sep).length;
 	}
 
+	static getParentPath(filePath: string, isWindows?: boolean): string {
+		const listPathItem = filePath.split(isWindows ? '\\' : '/');
+		let currentPath;
+
+		listPathItem.pop();
+
+		if (listPathItem.length === 1) {
+			if (isWindows) {
+				currentPath = 'C:\\';
+			} else {
+				currentPath = '/';
+			}
+		} else {
+			currentPath = listPathItem.join(isWindows ? '\\' : '/');
+		}
+
+		return FsMan.toValidPath(currentPath, isWindows);
+	}
+
 	static toPosixPath(filePath: string): string {
 		return filePath
 			.replace(/^\\\\\?\\/, '')
@@ -402,6 +421,7 @@ export const {
 	toValidPath,
 	joinPath,
 	getPathLevel,
+	getParentPath,
 	toPosixPath,
 	isValidFileName,
 	fileName,

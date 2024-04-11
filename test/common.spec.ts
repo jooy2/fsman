@@ -5,6 +5,7 @@ import {
 	toValidPath,
 	joinPath,
 	getPathLevel,
+	getParentPath,
 	toPosixPath,
 	isValidFileName,
 	fileName,
@@ -19,7 +20,7 @@ import {
 	mv,
 	empty,
 	hash
-} from '../dist';
+} from '../dist/index';
 
 const IS_WINDOWS_OS = process.platform === 'win32';
 const LONG_PATH =
@@ -78,6 +79,16 @@ describe('fsman', () => {
 		assert.strictEqual(getPathLevel('/'), 1);
 		assert.strictEqual(getPathLevel('/home/user'), 3);
 		assert.strictEqual(getPathLevel('/home/user/.ssh/test file.txt'), 5);
+		done();
+	});
+
+	it('getParentPath', (done) => {
+		assert.strictEqual(getParentPath('/home/user/test.txt'), '/home/user');
+		assert.strictEqual(getParentPath('/home'), '/');
+		assert.strictEqual(getParentPath('/'), '/');
+		assert.strictEqual(getParentPath('C:\\', true), 'C:\\');
+		assert.strictEqual(getParentPath('C:\\Users', true), 'C:\\');
+		assert.strictEqual(getParentPath('C:\\Users\\my', true), 'C:\\Users');
 		done();
 	});
 

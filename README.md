@@ -99,6 +99,17 @@ console.log(fsman.getPathLevel('C:\\Windows\\System32')); // 3
 console.log(fsman.getPathLevel('/home/user')); // 3
 ```
 
+### `getParentPath (<String>)`
+
+Returns the parent path one level above the given path.
+
+- `filePath <String>`: File or directory path
+
+```javascript
+console.log(fsman.getParentPath('C:\\Windows\\System32', true)); // 'C:\Windows'
+console.log(fsman.getParentPath('/home/user/text.txt')); // '/home/user'
+```
+
 ### `toPosixPath (<String>)`
 
 Returns the given path as a path in POSIX format (usually used by Linux). For example, a Windows path will be converted to `/` instead of `\\`.

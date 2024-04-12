@@ -1,6 +1,6 @@
 # Change Log
 
-## 1.12.0 (2024--)
+## 1.12.0 (2024-04-12)
 
 - BREAKING CHANGE: Most methods have been renamed to avoid conflicts with the fs module in named imports. Please refer to README.md.
 - BREAKING CHANGE: Most methods now behave async, returning a Promise. Please change your existing code to use await/then to ensure correct behavior.

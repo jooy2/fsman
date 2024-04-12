@@ -1,22 +1,11 @@
 import { exec } from 'child_process';
 import { join, resolve as pathResolve, extname, basename, dirname, win32, posix } from 'path';
-import {
-	statSync,
-	mkdirSync,
-	existsSync,
-	createReadStream,
-	renameSync,
-	readdirSync,
-	utimesSync,
-	closeSync,
-	rmSync,
-	openSync,
-	readFileSync,
-	writeSync
-} from 'fs';
+import { constants, createReadStream } from 'fs';
+import { stat, mkdir, rename, readdir, utimes, rm, open, readFile, access } from 'fs/promises';
 import { createHash } from 'crypto';
+import { Stats } from 'node:fs';
 
-interface FileStat {
+interface FileInfo {
 	success: boolean;
 	isDirectory: boolean;
 	size: number;
@@ -30,7 +19,7 @@ interface FileStat {
 }
 
 export default class FsMan {
-	static isHidden(filePath: string, isWindows = false): Promise<boolean> {
+	static isHiddenFile(filePath: string, isWindows = false): Promise<boolean> {
 		return new Promise<boolean>((resolve) => {
 			if (isWindows) {
 				exec(`attrib "${filePath}"`, (error, stdout, stderr) => {
@@ -46,7 +35,7 @@ export default class FsMan {
 		});
 	}
 
-	static humanizeSize(bytes: number, decimals = 2): string {
+	static humanizeFileSize(bytes: number, decimals = 2): string {
 		const sizeUnits = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 
 		if (bytes < 1) {
@@ -60,7 +49,7 @@ export default class FsMan {
 		}`;
 	}
 
-	static toValidPath(filePath: string, isWindows?: boolean): string {
+	static toValidFilePath(filePath: string, isWindows?: boolean): string {
 		if (isWindows) {
 			let windowsPath = filePath;
 
@@ -94,9 +83,9 @@ export default class FsMan {
 		return unixPath;
 	}
 
-	static joinPath(isWindows: boolean, ...paths: string[]): string {
+	static joinFilePath(isWindows: boolean, ...paths: string[]): string {
 		if (isWindows) {
-			return FsMan.toValidPath(isWindows ? win32.join(...paths) : join(...paths), true);
+			return FsMan.toValidFilePath(isWindows ? win32.join(...paths) : join(...paths), true);
 		}
 
 		let fullPath = '';
@@ -105,10 +94,10 @@ export default class FsMan {
 			fullPath = `${fullPath}/${paths[i]}`;
 		}
 
-		return FsMan.toValidPath(fullPath, false);
+		return FsMan.toValidFilePath(fullPath, false);
 	}
 
-	static getPathLevel(filePath: string): number {
+	static getFilePathLevel(filePath: string): number {
 		if (!filePath) {
 			return -1;
 		}
@@ -117,10 +106,10 @@ export default class FsMan {
 			return 1;
 		}
 
-		return FsMan.toPosixPath(filePath.replace(/\\+$/, '')).split(posix.sep).length;
+		return FsMan.toPosixFilePath(filePath.replace(/\\+$/, '')).split(posix.sep).length;
 	}
 
-	static getParentPath(filePath: string, isWindows?: boolean): string {
+	static getParentFilePath(filePath: string, isWindows?: boolean): string {
 		const listPathItem = filePath.split(isWindows ? '\\' : '/');
 		let currentPath;
 
@@ -136,10 +125,10 @@ export default class FsMan {
 			currentPath = listPathItem.join(isWindows ? '\\' : '/');
 		}
 
-		return FsMan.toValidPath(currentPath, isWindows);
+		return FsMan.toValidFilePath(currentPath, isWindows);
 	}
 
-	static toPosixPath(filePath: string): string {
+	static toPosixFilePath(filePath: string): string {
 		return filePath
 			.replace(/^\\\\\?\\/, '')
 			.replace(/\\/g, '/')
@@ -148,7 +137,7 @@ export default class FsMan {
 
 	static isValidFileName(filePath: string, unixType?: boolean): boolean {
 		let fileNameRegex;
-		const fileName = FsMan.fileName(filePath);
+		const fileName = FsMan.getFileName(filePath);
 
 		if (unixType) {
 			fileNameRegex = /(^\s+$)|(^\.+$)|([:/]+)/;
@@ -160,7 +149,7 @@ export default class FsMan {
 		return !fileNameRegex.test(fileName) && fileName.length <= 255;
 	}
 
-	static fileName(filePath: string, withExtension?: boolean): string {
+	static getFileName(filePath: string, withExtension?: boolean): string {
 		if (!filePath) {
 			return '';
 		}
@@ -182,7 +171,7 @@ export default class FsMan {
 
 	// NFD - macOS
 	// NFC - Windows
-	static normalize(
+	static normalizeFile(
 		filePath: string,
 		normalizationForm?: 'NFD' | 'NFC' | 'NFKC' | 'NFKD' | undefined
 	): string {
@@ -193,7 +182,7 @@ export default class FsMan {
 		return filePath.normalize(normalizationForm);
 	}
 
-	static ext(filePath: string, isWindows?: boolean): string {
+	static getFileExtension(filePath: string, isWindows?: boolean): string {
 		let strPath: string | undefined = filePath.split(isWindows ? '\\' : '/').pop();
 
 		if (!strPath) {
@@ -209,19 +198,19 @@ export default class FsMan {
 		return strPath.split('.')?.pop()?.toLowerCase() || '';
 	}
 
-	static stat(filePath: string): FileStat {
+	static async getFileInfo(filePath: string): Promise<FileInfo> {
 		const dateToUnixTime = (date: Date): number => Math.floor(new Date(date).getTime() / 1000);
 
 		try {
-			const fileItem = statSync(filePath);
+			const fileItem: Stats = await stat(filePath);
 
 			return {
 				success: true,
 				isDirectory: fileItem.isDirectory(),
-				ext: FsMan.ext(filePath),
+				ext: FsMan.getFileExtension(filePath),
 				size: fileItem.size,
-				sizeHumanized: FsMan.humanizeSize(fileItem.size),
-				name: FsMan.fileName(filePath),
+				sizeHumanized: FsMan.humanizeFileSize(fileItem.size),
+				name: FsMan.getFileName(filePath),
 				dirname: dirname(filePath),
 				path: pathResolve(filePath),
 				created: dateToUnixTime(fileItem.ctime),
@@ -247,9 +236,9 @@ export default class FsMan {
 		};
 	}
 
-	static head(filePath: string, length = 1): string | null {
+	static async headFile(filePath: string, length = 1): Promise<string | null> {
 		try {
-			const content = readFileSync(filePath, 'utf-8');
+			const content = await readFile(filePath, 'utf-8');
 			const contentByLine = content.split('\n');
 			let result = '';
 
@@ -266,9 +255,9 @@ export default class FsMan {
 		return null;
 	}
 
-	static tail(filePath: string, length = 1): string | null {
+	static async tailFile(filePath: string, length = 1): Promise<string | null> {
 		try {
-			const content = readFileSync(filePath, 'utf-8');
+			const content = await readFile(filePath, 'utf-8');
 			const contentByLine = content.split('\n');
 			let result = '';
 
@@ -291,10 +280,19 @@ export default class FsMan {
 		return null;
 	}
 
-	static mkdir(filePath: string, recursive = true): void {
+	static async isFileExists(filePath: string): Promise<boolean> {
 		try {
-			if (!existsSync(filePath)) {
-				mkdirSync(filePath, {
+			await access(filePath, constants.F_OK);
+			return true;
+		} catch (error) {
+			return false;
+		}
+	}
+
+	static async createFolder(filePath: string, recursive = true): Promise<void> {
+		try {
+			if (!(await FsMan.isFileExists(filePath))) {
+				await mkdir(filePath, {
 					recursive
 				});
 			}
@@ -305,7 +303,7 @@ export default class FsMan {
 		}
 	}
 
-	static touch(filePath: string): void {
+	static async touchFile(filePath: string): Promise<void> {
 		if (!filePath) {
 			return;
 		}
@@ -313,46 +311,44 @@ export default class FsMan {
 		const date: Date = new Date();
 
 		try {
-			utimesSync(filePath, date, date);
+			await utimes(filePath, date, date);
 		} catch (err) {
-			closeSync(openSync(filePath, 'a'));
+			const data = await open(filePath, 'a');
+
+			await data.close();
 		}
 	}
 
-	static touchDummy(filePath: string, size: number): Promise<boolean> {
-		return new Promise((resolve, reject) => {
-			if (!size || size < 0) {
-				reject(new Error('Size is required'));
-				return;
-			}
+	static async touchFileWithDummy(filePath: string, size: number): Promise<boolean> {
+		if (!size || size < 0) {
+			throw new Error('Size is required');
+		}
 
+		try {
 			if (size === 0) {
-				FsMan.touch(filePath);
-				resolve(true);
-				return;
+				await FsMan.touchFile(filePath);
+				return true;
 			}
 
-			try {
-				const data = openSync(filePath, 'w');
+			const data = await open(filePath, 'w');
 
-				writeSync(data, Buffer.alloc(1), 0, 1, size - 1);
-				closeSync(data);
+			await data.write(Buffer.alloc(1), 0, 1, size - 1);
+			await data.close();
 
-				resolve(true);
-			} catch (err) {
-				reject(err);
-			}
-		});
+			return true;
+		} catch (err) {
+			return false;
+		}
 	}
 
-	static rm(filePath: string): void {
+	static async deleteFile(filePath: string): Promise<void> {
 		if (!filePath) {
 			return;
 		}
 
 		try {
-			if (existsSync(filePath)) {
-				rmSync(filePath, {
+			if (await FsMan.isFileExists(filePath)) {
+				await rm(filePath, {
 					recursive: true,
 					force: true
 				});
@@ -362,18 +358,19 @@ export default class FsMan {
 		}
 	}
 
-	static mv(filePath: string, targetFilePath: string): void {
+	static async moveFile(filePath: string, targetFilePath: string): Promise<void> {
 		if (!filePath || !targetFilePath) {
 			return;
 		}
 
-		renameSync(filePath, targetFilePath);
+		await rename(filePath, targetFilePath);
 	}
 
-	static empty(directoryPath: string): void {
+	static async deleteAllFileFromDirectory(directoryPath: string): Promise<void> {
 		let fileItems: Array<string> = [];
+
 		try {
-			fileItems = readdirSync(directoryPath);
+			fileItems = await readdir(directoryPath);
 		} catch {
 			// Do nothing
 		}
@@ -381,11 +378,12 @@ export default class FsMan {
 		const fileItemLength: number = fileItems.length;
 
 		for (let i = 0; i < fileItemLength; i += 1) {
-			FsMan.rm(join(directoryPath, fileItems[i]));
+			// eslint-disable-next-line no-await-in-loop
+			await FsMan.deleteFile(join(directoryPath, fileItems[i]));
 		}
 	}
 
-	static hash(
+	static async hashFile(
 		filePath: string,
 		algorithm: 'md5' | 'sha1' | 'sha256' | 'sha512' = 'md5'
 	): Promise<string> {
@@ -416,25 +414,26 @@ export default class FsMan {
 export { FsMan };
 
 export const {
-	isHidden,
-	humanizeSize,
-	toValidPath,
-	joinPath,
-	getPathLevel,
-	getParentPath,
-	toPosixPath,
+	isHiddenFile,
+	humanizeFileSize,
+	toValidFilePath,
+	joinFilePath,
+	getFilePathLevel,
+	getParentFilePath,
+	toPosixFilePath,
 	isValidFileName,
-	fileName,
-	normalize,
-	ext,
-	stat,
-	head,
-	tail,
-	mkdir,
-	touch,
-	touchDummy,
-	rm,
-	mv,
-	empty,
-	hash
+	isFileExists,
+	getFileName,
+	normalizeFile,
+	getFileExtension,
+	getFileInfo,
+	headFile,
+	tailFile,
+	createFolder,
+	touchFile,
+	touchFileWithDummy,
+	deleteFile,
+	moveFile,
+	deleteAllFileFromDirectory,
+	hashFile
 } = FsMan;

@@ -2,6 +2,8 @@
 
 ## 1.12.0 (2024--)
 
+- BREAKING CHANGE: Most methods have been renamed to avoid conflicts with the fs module in named imports. Please refer to README.md.
+- BREAKING CHANGE: Most methods now behave async, returning a Promise. Please change your existing code to use await/then to ensure correct behavior.
 - `toValidPath`: `resolvePath` method renamed to `toValidPath`
 - `toValidPath`: Fix incorrect path retuning on Windows
 - `getParentPath`: Add getParentPath method

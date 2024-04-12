@@ -1,107 +1,110 @@
 import assert from 'assert';
 import {
-	isHidden,
-	humanizeSize,
-	toValidPath,
-	joinPath,
-	getPathLevel,
-	getParentPath,
-	toPosixPath,
+	isHiddenFile,
+	humanizeFileSize,
+	toValidFilePath,
+	joinFilePath,
+	getFilePathLevel,
+	getParentFilePath,
+	toPosixFilePath,
 	isValidFileName,
-	fileName,
-	normalize,
-	ext,
-	stat,
-	head,
-	tail,
-	touch,
-	touchDummy,
-	rm,
-	mv,
-	empty,
-	hash
-} from '../dist/index';
+	getFileName,
+	normalizeFile,
+	getFileExtension,
+	getFileInfo,
+	headFile,
+	tailFile,
+	touchFile,
+	touchFileWithDummy,
+	deleteFile,
+	deleteAllFileFromDirectory,
+	moveFile,
+	hashFile
+} from '../dist';
 
 const IS_WINDOWS_OS = process.platform === 'win32';
 const LONG_PATH =
 	'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\115.0.1901.203\\Trust Protection Lists';
 
 describe('fsman', () => {
-	it('isHidden', async () => {
-		assert.strictEqual(await isHidden('/home/user/Desktop/hello.txt'), false);
-		assert.strictEqual(await isHidden('~/.bash_profile'), true);
-		assert.strictEqual(await isHidden('.zshrc'), true);
-		assert.strictEqual(await isHidden('/home/user/Desktop/.hidden'), true);
-		assert.strictEqual(await isHidden('/home/user/Desktop/.conf/config'), false);
-		assert.strictEqual(await isHidden('/home/user/Desktop/.conf/.secret'), true);
+	it('isHiddenFile', async () => {
+		assert.strictEqual(await isHiddenFile('/home/user/Desktop/hello.txt'), false);
+		assert.strictEqual(await isHiddenFile('~/.bash_profile'), true);
+		assert.strictEqual(await isHiddenFile('.zshrc'), true);
+		assert.strictEqual(await isHiddenFile('/home/user/Desktop/.hidden'), true);
+		assert.strictEqual(await isHiddenFile('/home/user/Desktop/.conf/config'), false);
+		assert.strictEqual(await isHiddenFile('/home/user/Desktop/.conf/.secret'), true);
 		if (IS_WINDOWS_OS) {
-			assert.strictEqual(await isHidden('C:\\ProgramData', true), true);
-			assert.strictEqual(await isHidden('C:\\Users', true), false);
+			assert.strictEqual(await isHiddenFile('C:\\ProgramData', true), true);
+			assert.strictEqual(await isHiddenFile('C:\\Users', true), false);
 		}
 	});
 
-	it('humanizeSize', (done) => {
-		assert.strictEqual(humanizeSize(0), '0 Bytes');
-		assert.strictEqual(humanizeSize(1000000), '976.56 KB');
-		assert.strictEqual(humanizeSize(100000000, 3), '95.367 MB');
+	it('humanizeFileSize', (done) => {
+		assert.strictEqual(humanizeFileSize(0), '0 Bytes');
+		assert.strictEqual(humanizeFileSize(1000000), '976.56 KB');
+		assert.strictEqual(humanizeFileSize(100000000, 3), '95.367 MB');
 		done();
 	});
 
-	it('toValidPath', (done) => {
-		assert.strictEqual(toValidPath('home'), '/home');
-		assert.strictEqual(toValidPath('/home//test/'), '/home/test');
-		assert.strictEqual(toValidPath('home/test/.conf'), '/home/test/.conf');
-		assert.strictEqual(toValidPath('/'), '/');
-		assert.strictEqual(toValidPath('C:\\\\Users\\test\\', true), 'C:\\Users\\test');
-		assert.strictEqual(toValidPath('C:\\Users\\test\\.config', true), 'C:\\Users\\test\\.config');
-		assert.strictEqual(toValidPath('\\Users\\test\\.config', true), '\\Users\\test\\.config');
-		assert.strictEqual(toValidPath('Users\\test\\.config', true), '\\Users\\test\\.config');
-		assert.strictEqual(toValidPath('C:', true), 'C:\\');
-		assert.strictEqual(toValidPath('C:\\\\', true), 'C:\\');
-		assert.strictEqual(toValidPath('C:\\Users\\', true), 'C:\\Users');
-		done();
-	});
-
-	it('joinPath', (done) => {
-		assert.strictEqual(joinPath(true, 'C:\\', 'Windows', 'System32'), 'C:\\Windows\\System32');
-		assert.strictEqual(joinPath(true, 'Users', 'test'), '\\Users\\test');
-		assert.strictEqual(joinPath(true, 'C:\\Users\\test'), 'C:\\Users\\test');
-		assert.strictEqual(joinPath(false, '/home', 'user', 'Desktop'), '/home/user/Desktop');
-		assert.strictEqual(joinPath(false, 'home', '/user', '.bashrc'), '/home/user/.bashrc');
-		done();
-	});
-
-	it('getPathLevel', (done) => {
-		assert.strictEqual(getPathLevel('C:'), 1);
-		assert.strictEqual(getPathLevel('C:\\'), 1);
-		assert.strictEqual(getPathLevel('C:\\Windows\\System32'), 3);
-		assert.strictEqual(getPathLevel(LONG_PATH), 7);
-		assert.strictEqual(getPathLevel('/'), 1);
-		assert.strictEqual(getPathLevel('/home/user'), 3);
-		assert.strictEqual(getPathLevel('/home/user/.ssh/test file.txt'), 5);
-		done();
-	});
-
-	it('getParentPath', (done) => {
-		assert.strictEqual(getParentPath('/home/user/test.txt'), '/home/user');
-		assert.strictEqual(getParentPath('/home'), '/');
-		assert.strictEqual(getParentPath('/'), '/');
-		assert.strictEqual(getParentPath('C:\\', true), 'C:\\');
-		assert.strictEqual(getParentPath('C:\\Users', true), 'C:\\');
-		assert.strictEqual(getParentPath('C:\\Users\\my', true), 'C:\\Users');
-		done();
-	});
-
-	it('toPosixPath', (done) => {
-		assert.strictEqual(toPosixPath('\\\\Shared'), '/Shared');
-		assert.strictEqual(toPosixPath('C:\\'), 'C:/');
-		assert.strictEqual(toPosixPath('C:\\Windows\\System32'), 'C:/Windows/System32');
-		assert.strictEqual(toPosixPath('Windows\\System32'), 'Windows/System32');
+	it('toValidFilePath', (done) => {
+		assert.strictEqual(toValidFilePath('home'), '/home');
+		assert.strictEqual(toValidFilePath('/home//test/'), '/home/test');
+		assert.strictEqual(toValidFilePath('home/test/.conf'), '/home/test/.conf');
+		assert.strictEqual(toValidFilePath('/'), '/');
+		assert.strictEqual(toValidFilePath('C:\\\\Users\\test\\', true), 'C:\\Users\\test');
 		assert.strictEqual(
-			toPosixPath(LONG_PATH),
+			toValidFilePath('C:\\Users\\test\\.config', true),
+			'C:\\Users\\test\\.config'
+		);
+		assert.strictEqual(toValidFilePath('\\Users\\test\\.config', true), '\\Users\\test\\.config');
+		assert.strictEqual(toValidFilePath('Users\\test\\.config', true), '\\Users\\test\\.config');
+		assert.strictEqual(toValidFilePath('C:', true), 'C:\\');
+		assert.strictEqual(toValidFilePath('C:\\\\', true), 'C:\\');
+		assert.strictEqual(toValidFilePath('C:\\Users\\', true), 'C:\\Users');
+		done();
+	});
+
+	it('joinFilePath', (done) => {
+		assert.strictEqual(joinFilePath(true, 'C:\\', 'Windows', 'System32'), 'C:\\Windows\\System32');
+		assert.strictEqual(joinFilePath(true, 'Users', 'test'), '\\Users\\test');
+		assert.strictEqual(joinFilePath(true, 'C:\\Users\\test'), 'C:\\Users\\test');
+		assert.strictEqual(joinFilePath(false, '/home', 'user', 'Desktop'), '/home/user/Desktop');
+		assert.strictEqual(joinFilePath(false, 'home', '/user', '.bashrc'), '/home/user/.bashrc');
+		done();
+	});
+
+	it('getFilePathLevel', (done) => {
+		assert.strictEqual(getFilePathLevel('C:'), 1);
+		assert.strictEqual(getFilePathLevel('C:\\'), 1);
+		assert.strictEqual(getFilePathLevel('C:\\Windows\\System32'), 3);
+		assert.strictEqual(getFilePathLevel(LONG_PATH), 7);
+		assert.strictEqual(getFilePathLevel('/'), 1);
+		assert.strictEqual(getFilePathLevel('/home/user'), 3);
+		assert.strictEqual(getFilePathLevel('/home/user/.ssh/test file.txt'), 5);
+		done();
+	});
+
+	it('getParentFilePath', (done) => {
+		assert.strictEqual(getParentFilePath('/home/user/test.txt'), '/home/user');
+		assert.strictEqual(getParentFilePath('/home'), '/');
+		assert.strictEqual(getParentFilePath('/'), '/');
+		assert.strictEqual(getParentFilePath('C:\\', true), 'C:\\');
+		assert.strictEqual(getParentFilePath('C:\\Users', true), 'C:\\');
+		assert.strictEqual(getParentFilePath('C:\\Users\\my', true), 'C:\\Users');
+		done();
+	});
+
+	it('toPosixFilePath', (done) => {
+		assert.strictEqual(toPosixFilePath('\\\\Shared'), '/Shared');
+		assert.strictEqual(toPosixFilePath('C:\\'), 'C:/');
+		assert.strictEqual(toPosixFilePath('C:\\Windows\\System32'), 'C:/Windows/System32');
+		assert.strictEqual(toPosixFilePath('Windows\\System32'), 'Windows/System32');
+		assert.strictEqual(
+			toPosixFilePath(LONG_PATH),
 			'C:/Program Files (x86)/Microsoft/Edge/Application/115.0.1901.203/Trust Protection Lists'
 		);
-		assert.strictEqual(toPosixPath('/home/user/Test file.txt'), '/home/user/Test file.txt');
+		assert.strictEqual(toPosixFilePath('/home/user/Test file.txt'), '/home/user/Test file.txt');
 		done();
 	});
 
@@ -134,7 +137,7 @@ describe('fsman', () => {
 		done();
 	});
 
-	it('hash', async () => {
+	it('hashFile', async () => {
 		const hashTable = IS_WINDOWS_OS
 			? {
 					md5: '239884dde2b4354613a228001b22d9b9',
@@ -151,107 +154,99 @@ describe('fsman', () => {
 						'b03187c2962c947de2d5d3cdaa2f25e5e1df31c5190cccf42d03759d042dd5f5a2773ca9903e122b6faaf4a53b45c419d605464abb83cbe578ed249cb558844a'
 				};
 
-		assert.strictEqual(await hash('test/targets/STATIC_FILE.txt'), hashTable.md5);
-		assert.strictEqual(await hash('test/targets/STATIC_FILE.txt', 'sha1'), hashTable.sha1);
-		assert.strictEqual(await hash('test/targets/STATIC_FILE.txt', 'sha256'), hashTable.sha256);
-		assert.strictEqual(await hash('test/targets/STATIC_FILE.txt', 'sha512'), hashTable.sha512);
+		assert.strictEqual(await hashFile('test/targets/STATIC_FILE.txt'), hashTable.md5);
+		assert.strictEqual(await hashFile('test/targets/STATIC_FILE.txt', 'sha1'), hashTable.sha1);
+		assert.strictEqual(await hashFile('test/targets/STATIC_FILE.txt', 'sha256'), hashTable.sha256);
+		assert.strictEqual(await hashFile('test/targets/STATIC_FILE.txt', 'sha512'), hashTable.sha512);
 	});
 
-	it('ext', (done) => {
-		assert.strictEqual(ext('test.123/sample.txt'), 'txt');
-		assert.strictEqual(ext('test.123/sample'), '');
-		assert.strictEqual(ext('test/sample.txt'), 'txt');
-		assert.strictEqual(ext('test/hello.1/sample.txt'), 'txt');
-		assert.strictEqual(ext('test/sample'), '');
-		assert.strictEqual(ext('test.txt.sample'), 'sample');
-		assert.strictEqual(ext('test'), '');
-		assert.strictEqual(ext('TEST.FILE.TXT'), 'txt');
-		assert.strictEqual(ext('test..txt..png'), 'png');
-		assert.strictEqual(ext('txt', true), '');
-		assert.strictEqual(ext('txt.png', true), 'png');
-		assert.strictEqual(ext('C:\\test\\txt.png', true), 'png');
-		assert.strictEqual(ext('C:\\test.hello.sample\\txt', true), '');
-		assert.strictEqual(ext('C:\\test.hello.sample\\txt.txt', true), 'txt');
+	it('getFileExtension', (done) => {
+		assert.strictEqual(getFileExtension('test.123/sample.txt'), 'txt');
+		assert.strictEqual(getFileExtension('test.123/sample'), '');
+		assert.strictEqual(getFileExtension('test/sample.txt'), 'txt');
+		assert.strictEqual(getFileExtension('test/hello.1/sample.txt'), 'txt');
+		assert.strictEqual(getFileExtension('test/sample'), '');
+		assert.strictEqual(getFileExtension('test.txt.sample'), 'sample');
+		assert.strictEqual(getFileExtension('test'), '');
+		assert.strictEqual(getFileExtension('TEST.FILE.TXT'), 'txt');
+		assert.strictEqual(getFileExtension('test..txt..png'), 'png');
+		assert.strictEqual(getFileExtension('txt', true), '');
+		assert.strictEqual(getFileExtension('txt.png', true), 'png');
+		assert.strictEqual(getFileExtension('C:\\test\\txt.png', true), 'png');
+		assert.strictEqual(getFileExtension('C:\\test.hello.sample\\txt', true), '');
+		assert.strictEqual(getFileExtension('C:\\test.hello.sample\\txt.txt', true), 'txt');
 		done();
 	});
 
-	it('fileName', (done) => {
-		assert.strictEqual(fileName('test/sample.txt'), 'sample');
-		assert.strictEqual(fileName('test/sample.txt.sample'), 'sample.txt');
-		assert.strictEqual(fileName('test/sample.txt', true), 'sample.txt');
-		assert.strictEqual(fileName('C:\\Users\\user\\Desktop\\hello.txt'), 'hello');
-		assert.strictEqual(fileName('C:\\Users\\user\\Desktop\\hello.txt', true), 'hello.txt');
-		assert.strictEqual(fileName('test'), 'test');
+	it('getFileName', (done) => {
+		assert.strictEqual(getFileName('test/sample.txt'), 'sample');
+		assert.strictEqual(getFileName('test/sample.txt.sample'), 'sample.txt');
+		assert.strictEqual(getFileName('test/sample.txt', true), 'sample.txt');
+		assert.strictEqual(getFileName('C:\\Users\\user\\Desktop\\hello.txt'), 'hello');
+		assert.strictEqual(getFileName('C:\\Users\\user\\Desktop\\hello.txt', true), 'hello.txt');
+		assert.strictEqual(getFileName('test'), 'test');
 		done();
 	});
 
-	it('normalize', (done) => {
+	it('normalizeFile', async () => {
 		const NFD = '안녕하세요_12345-ABCDE'.normalize('NFD'); // macOS
 		const NFC = '안녕하세요_12345-ABCDE'.normalize('NFC'); // Windows
 
-		assert.strictEqual(normalize(NFD, 'NFC'), NFC);
-		assert.strictEqual(normalize(NFC, 'NFD'), NFD);
-		done();
+		assert.strictEqual(await normalizeFile(NFD, 'NFC'), NFC);
+		assert.strictEqual(await normalizeFile(NFC, 'NFD'), NFD);
 	});
 
-	it('stat', (done) => {
-		assert(stat('test/targets/STATIC_FILE.txt'));
-		assert(stat('test'));
-		done();
+	it('getFileInfo', async () => {
+		assert(await getFileInfo('test/targets/STATIC_FILE.txt'));
+		assert(await getFileInfo('test'));
 	});
 
-	it('head', (done) => {
-		assert.strictEqual(head('test/targets/hello.md'), '# Hello, World!');
-		assert.strictEqual(head('test/targets/hello.md', 1), '# Hello, World!');
+	it('headFile', async () => {
+		assert.strictEqual(await headFile('test/targets/hello.md'), '# Hello, World!');
+		assert.strictEqual(await headFile('test/targets/hello.md', 1), '# Hello, World!');
 		assert.strictEqual(
-			head('test/targets/hello.md', 4),
+			await headFile('test/targets/hello.md', 4),
 			'# Hello, World!\n\nThis is Hello File.\n'
 		);
-		done();
 	});
 
-	it('tail', (done) => {
-		assert.strictEqual(tail('test/targets/hello.md'), '--- Hello End ---');
-		assert.strictEqual(tail('test/targets/hello.md', 1), '--- Hello End ---');
+	it('tailFile', async () => {
+		assert.strictEqual(await tailFile('test/targets/hello.md'), '--- Hello End ---');
+		assert.strictEqual(await tailFile('test/targets/hello.md', 1), '--- Hello End ---');
 		assert.strictEqual(
-			tail('test/targets/hello.md', 4),
+			await tailFile('test/targets/hello.md', 4),
 			'Do not modify this file.\n\n--- Hello End ---'
 		);
-		done();
 	});
 
-	it('touch', (done) => {
-		touch('test/targets/__TEST__TOUCH_FILE.txt');
-		done();
+	it('touchFile', async () => {
+		await touchFile('test/targets/__TEST__TOUCH_FILE.txt');
 	});
 
-	it('rm', (done) => {
-		rm('test/targets/__TEST__TOUCH_FILE.txt');
-		done();
+	it('deleteFile', async () => {
+		await deleteFile('test/targets/__TEST__TOUCH_FILE.txt');
 	});
 
-	it('touchDummy', async () => {
+	it('touchFileWithDummy', async () => {
 		const dummyFilePath = 'test/targets/__TEST__TOUCH_FILE.txt';
 
-		await touchDummy(dummyFilePath, 100);
+		await touchFileWithDummy(dummyFilePath, 100);
 
-		const dummyFileStat = stat(dummyFilePath);
+		const dummyFileStat = await getFileInfo(dummyFilePath);
 
-		rm(dummyFilePath);
+		await deleteFile(dummyFilePath);
 
 		if (dummyFileStat.size !== 100) {
 			assert.fail('Test Failed. Dummy file not created correctly.');
 		}
 	});
 
-	it('mv', (done) => {
-		mv('test/targets/MV_TEST.txt', 'test/targets/MV_TEST_1.txt');
-		mv('test/targets/MV_TEST_1.txt', 'test/targets/MV_TEST.txt');
-		done();
+	it('moveFile', async () => {
+		await moveFile('test/targets/MV_TEST.txt', 'test/targets/MV_TEST_1.txt');
+		await moveFile('test/targets/MV_TEST_1.txt', 'test/targets/MV_TEST.txt');
 	});
 
-	it('empty', (done) => {
-		empty('test/targets/EMPTY');
-		done();
+	it('deleteAllFileFromDirectory', async () => {
+		await deleteAllFileFromDirectory('test/targets/EMPTY');
 	});
 });

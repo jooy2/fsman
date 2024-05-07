@@ -347,12 +347,10 @@ export default class FsMan {
 		}
 
 		try {
-			if (await FsMan.isFileExists(filePath)) {
-				await rm(filePath, {
-					recursive: true,
-					force: true
-				});
-			}
+			await rm(filePath, {
+				recursive: true,
+				force: true
+			});
 		} catch {
 			// Do Nothing
 		}

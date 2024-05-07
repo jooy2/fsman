@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.12.1 (2024-00-00)
+
+- `deleteFile`: Remove unnecessary file existence checks
+
 ## 1.12.0 (2024-04-12)
 
 - BREAKING CHANGE: Most methods have been renamed to avoid conflicts with the fs module in named imports. Please refer to `README.md`.

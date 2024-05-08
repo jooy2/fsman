@@ -274,7 +274,9 @@ fsman.touchFileWithDummy('/home/user/test.txt', 100000);
 
 ### `deleteFile (<Void>)`
 
-Delete files in the specified path. If the file does not exist in the path, it is ignored.
+Delete files or directory in the specified path. If the file does not exist in the path, it is ignored.
+
+This method also supports deleting directory paths. If files exist within the directory, they are included and removed.
 
 - `filePath <String>`: File or directory path
 

@@ -88,13 +88,7 @@ export default class FsMan {
 			return FsMan.toValidFilePath(win32.join(...paths), true);
 		}
 
-		let fullPath = '';
-
-		for (let i = 0, iLen = paths.length; i < iLen; i += 1) {
-			fullPath = `${fullPath}/${paths[i]}`;
-		}
-
-		return FsMan.toValidFilePath(fullPath, false);
+		return FsMan.toValidFilePath(paths.join('/'), false);
 	}
 
 	static getFilePathLevel(filePath: string): number {

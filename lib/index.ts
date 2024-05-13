@@ -85,7 +85,7 @@ export default class FsMan {
 
 	static joinFilePath(isWindows: boolean, ...paths: string[]): string {
 		if (isWindows) {
-			return FsMan.toValidFilePath(isWindows ? win32.join(...paths) : join(...paths), true);
+			return FsMan.toValidFilePath(win32.join(...paths), true);
 		}
 
 		let fullPath = '';

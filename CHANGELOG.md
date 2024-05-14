@@ -1,6 +1,6 @@
 # Change Log
 
-## 1.12.1 (2024-00-00)
+## 1.12.1 (2024-05-14)
 
 - `deleteFile`: Remove unnecessary file existence checks
 - `joinFilePath`: Responding to parent dir paths

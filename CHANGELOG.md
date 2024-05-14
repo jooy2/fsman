@@ -3,6 +3,8 @@
 ## 1.12.1 (2024-00-00)
 
 - `deleteFile`: Remove unnecessary file existence checks
+- `joinFilePath`: Responding to parent dir paths
+- cleanup: Remove redundant codes
 
 ## 1.12.0 (2024-04-12)
 

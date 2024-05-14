@@ -67,10 +67,15 @@ describe('fsman', () => {
 
 	it('joinFilePath', (done) => {
 		assert.strictEqual(joinFilePath(true, 'C:\\', 'Windows', 'System32'), 'C:\\Windows\\System32');
+		assert.strictEqual(
+			joinFilePath(true, 'C:\\', 'Windows', '..', 'System32', 'Test.txt'),
+			'C:\\System32\\Test.txt'
+		);
 		assert.strictEqual(joinFilePath(true, 'Users', 'test'), '\\Users\\test');
 		assert.strictEqual(joinFilePath(true, 'C:\\Users\\test'), 'C:\\Users\\test');
 		assert.strictEqual(joinFilePath(false, '/home', 'user', 'Desktop'), '/home/user/Desktop');
 		assert.strictEqual(joinFilePath(false, 'home', '/user', '.bashrc'), '/home/user/.bashrc');
+		assert.strictEqual(joinFilePath(false, 'home', '/user', '..', '.bashrc'), '/home/.bashrc');
 		done();
 	});
 

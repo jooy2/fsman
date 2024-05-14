@@ -88,7 +88,7 @@ export default class FsMan {
 			return FsMan.toValidFilePath(win32.join(...paths), true);
 		}
 
-		return FsMan.toValidFilePath(paths.join('/'), false);
+		return FsMan.toValidFilePath(posix.join(...paths), false);
 	}
 
 	static getFilePathLevel(filePath: string): number {

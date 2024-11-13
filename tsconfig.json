@@ -10,6 +10,6 @@
 		"outDir": "./dist",
 		"strict": true
 	},
-	"include": ["lib/**/*.ts", "lib/**/*.d.ts", "test/**/*.spec.ts", "lib/**/*.js"],
+	"include": ["lib/**/*.ts", "lib/**/*.d.ts", "test/**/*.test.ts", "lib/**/*.js"],
 	"exclude": ["node_modules"]
 }
